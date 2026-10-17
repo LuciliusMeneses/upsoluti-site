@@ -1,0 +1,365 @@
+squad:
+  code: "design-system-uiux-refinement"
+  name: "Design System + UI/UX Refinement"
+  description: "Implementar Design System completo e refinar UI/UX do CRM para torná-lo maduro, profissional e coerente"
+  icon: "🎨"
+  version: "1.0.0"
+  created_at: "2026-10-10"
+
+agents:
+  - id: "uiux-designer"
+    name: "UI/UX Designer"
+    title: "Designer de Interface e Experiência"
+    icon: "🎨"
+    execution: "inline"
+    role_summary: "Hierarquia visual, fluxos de usuário, estados de interface, densidade de informação, consistência"
+    skills: []
+    tasks:
+      - name: "design-tokens"
+        file: "tasks/design-tokens.md"
+        description: "Definir princípios de hierarquia visual e tokens base"
+      - name: "component-states"
+        file: "tasks/component-states.md"
+        description: "Especificar todos os estados de componentes (hover, focus, disabled, loading, error)"
+      - name: "layout-patterns"
+        file: "tasks/layout-patterns.md"
+        description: "Definir padrões de layout: sidebar, topbar, content area, grids"
+      - name: "sidebar-navigation"
+        file: "tasks/sidebar-navigation.md"
+        description: "Projetar navegação lateral com agrupamentos CORE, ACTIVITY, SYSTEM"
+      - name: "dashboard-hierarchy"
+        file: "tasks/dashboard-hierarchy.md"
+        description: "Estruturar dashboard: PRIMARY METRICS > OPERATIONAL > ACTIVITY"
+      - name: "table-patterns"
+        file: "tasks/table-patterns.md"
+        description: "Definir padrão de tabelas profissionais com sorting, filtering, pagination"
+      - name: "detail-page-patterns"
+        file: "tasks/detail-page-patterns.md"
+        description: "Padrão de páginas de detalhe: header, tabs (overview, details, deals, tasks, timeline, notes)"
+      - name: "form-patterns"
+        file: "tasks/form-patterns.md"
+        description: "Padrão de formulários: labels, help text, errors, required states, actions"
+      - name: "kanban-patterns"
+        file: "tasks/kanban-patterns.md"
+        description: "Padrão Kanban operacional: stages, cards, totals, valores, probability"
+      - name: "task-patterns"
+        file: "tasks/task-patterns.md"
+        description: "Visão produtiva de tasks: status, priority, due date, entity, overdue/due today/upcoming"
+      - name: "calendar-patterns"
+        file: "tasks/calendar-patterns.md"
+        description: "Padrão de agenda: upcoming meetings, day/week context, entity relationship"
+      - name: "search-patterns"
+        file: "tasks/search-patterns.md"
+        description: "Command palette: Ctrl+K, resultados agrupados, keyboard navigation"
+
+  - id: "product-designer"
+    name: "Product Designer"
+    title: "Designer de Produto"
+    icon: "🛠️"
+    execution: "inline"
+    role_summary: "Experiência end-to-end, prioridades visuais, fluxos comerciais, decisões de produto, clareza operacional"
+    skills: []
+    tasks:
+      - name: "user-flows"
+        file: "tasks/user-flows.md"
+        description: "Mapear jornadas críticas do usuário comercial"
+      - name: "business-priorities"
+        file: "tasks/business-priorities.md"
+        description: "Definir prioridades visuais por módulo baseado em valor de negócio"
+      - name: "feature-scoping"
+        file: "tasks/feature-scoping.md"
+        description: "Escopo de features por fase de implementação"
+      - name: "metrics-definition"
+        file: "tasks/metrics-definition.md"
+        description: "Definir KPIs de adoção e sucesso da UI"
+      - name: "acceptance-criteria"
+        file: "tasks/acceptance-criteria.md"
+        description: "Critérios de aceitação de UI por módulo"
+
+  - id: "design-system-specialist"
+    name: "Design System Specialist"
+    title: "Especialista em Design System"
+    icon: "📐"
+    execution: "inline"
+    role_summary: "Tokens, tipografia, spacing, borders, shadows, elevation, surface hierarchy, icon sizing, component density, padrões reutilizáveis"
+    skills: []
+    tasks:
+      - name: "tokens"
+        file: "tasks/tokens.md"
+        description: "Definir tokens semânticos: colors, spacing, typography, shadows, borders, radius"
+      - name: "typography-scale"
+        file: "tasks/typography-scale.md"
+        description: "Criar escala tipográfica sistemática"
+      - name: "spacing-scale"
+        file: "tasks/spacing-scale.md"
+        description: "Criar escala de spacing matemática"
+      - name: "color-system"
+        file: "tasks/color-system.md"
+        description: "Sistema de cores semântico: background, surface, border, text, accent, semantic"
+      - name: "shadow-system"
+        file: "tasks/shadow-system.md"
+        description: "Sistema de sombras e elevation"
+      - name: "border-radius"
+        file: "tasks/border-radius.md"
+        description: "Escala de border radius"
+      - name: "component-variants"
+        file: "tasks/component-variants.md"
+        description: "Variantes documentadas de cada componente"
+      - name: "state-patterns"
+        file: "tasks/state-patterns.md"
+        description: "Padrões de estados: loading, empty, error, success, disabled, permission-denied"
+      - name: "density-tokens"
+        file: "tasks/density-tokens.md"
+        description: "Tokens de densidade: compact, comfortable, spacious"
+
+  - id: "frontend-ui-engineer"
+    name: "Frontend UI Engineer"
+    title: "Engenheiro Frontend UI"
+    icon: "⚛️"
+    execution: "inline"
+    role_summary: "Implementação fiel do design, responsividade, acessibilidade, performance visual, componentes reutilizáveis"
+    skills: []
+    tasks:
+      - name: "token-implementation"
+        file: "tasks/token-implementation.md"
+        description: "Implementar tokens no Tailwind config e CSS variables"
+      - name: "component-library"
+        file: "tasks/component-library.md"
+        description: "Criar biblioteca de componentes atômicos (Button, Input, Select, Badge, Avatar, etc.)"
+      - name: "composite-components"
+        file: "tasks/composite-components.md"
+        description: "Implementar componentes compostos (Table, Card, Modal, Drawer, Dropdown, Tabs)"
+      - name: "layout-components"
+        file: "tasks/layout-components.md"
+        description: "Implementar Sidebar, Topbar, ContentArea, Grid, Stack, Container"
+      - name: "responsive-patterns"
+        file: "tasks/responsive-patterns.md"
+        description: "Garantir responsividade desktop, notebook, tablet, mobile básico"
+      - name: "accessibility-implementation"
+        file: "tasks/accessibility-implementation.md"
+        description: "Implementar ARIA, focus management, semantic HTML, keyboard navigation"
+      - name: "performance-optimization"
+        file: "tasks/performance-optimization.md"
+        description: "Otimizar bundle, evitar re-renders, lazy loading, code splitting"
+      - name: "build-validation"
+        file: "tasks/build-validation.md"
+        description: "Executar typecheck, lint, tests, production build"
+
+  - id: "accessibility-specialist"
+    name: "Accessibility Specialist"
+    title: "Especialista em Acessibilidade"
+    icon: "♿"
+    execution: "inline"
+    role_summary: "Contraste, navegação por teclado, foco, labels, semântica, WCAG"
+    skills: []
+    tasks:
+      - name: "contrast-audit"
+        file: "tasks/contrast-audit.md"
+        description: "Auditar contraste de todos os tokens (4.5:1 normal, 3:1 large)"
+      - name: "keyboard-navigation"
+        file: "tasks/keyboard-navigation.md"
+        description: "Validar navegação completa por teclado em todos os fluxos"
+      - name: "focus-management"
+        file: "tasks/focus-management.md"
+        description: "Garantir focus-visible consistente em todos elementos interativos"
+      - name: "semantic-html"
+        file: "tasks/semantic-html.md"
+        description: "Validar HTML semântico em todos componentes e páginas"
+      - name: "aria-labels"
+        file: "tasks/aria-labels.md"
+        description: "Implementar ARIA labels, roles, live regions onde necessário"
+      - name: "wcag-validation"
+        file: "tasks/wcag-validation.md"
+        description: "Validação completa WCAG AA"
+      - name: "screen-reader-testing"
+        file: "tasks/screen-reader-testing.md"
+        description: "Testar com leitores de tela (NVDA, VoiceOver)"
+
+pipeline:
+  - step: 1
+    name: "Design System Foundation"
+    type: "agent"
+    agent: "design-system-specialist"
+    execution: "inline"
+    tasks:
+      - "tokens"
+      - "typography-scale"
+      - "spacing-scale"
+      - "color-system"
+      - "shadow-system"
+      - "border-radius"
+      - "density-tokens"
+
+  - step: 2
+    name: "Component Specifications & States"
+    type: "agent"
+    agent: "uiux-designer"
+    execution: "inline"
+    tasks:
+      - "component-states"
+      - "layout-patterns"
+
+  - step: 3
+    name: "Sidebar & Topbar Layout"
+    type: "agent"
+    agent: "uiux-designer"
+    execution: "inline"
+    tasks:
+      - "sidebar-navigation"
+    agent: "product-designer"
+    execution: "inline"
+    tasks:
+      - "user-flows"
+
+  - step: 4
+    name: "Dashboard Redesign"
+    type: "agent"
+    agent: "uiux-designer"
+    execution: "inline"
+    tasks:
+      - "dashboard-hierarchy"
+    agent: "product-designer"
+    execution: "inline"
+    tasks:
+      - "business-priorities"
+      - "metrics-definition"
+
+  - step: 5
+    name: "Table & List Patterns"
+    type: "agent"
+    agent: "uiux-designer"
+    execution: "inline"
+    tasks:
+      - "table-patterns"
+
+  - step: 6
+    name: "Detail Page Patterns"
+    type: "agent"
+    agent: "uiux-designer"
+    execution: "inline"
+    tasks:
+      - "detail-page-patterns"
+    agent: "product-designer"
+    execution: "inline"
+    tasks:
+      - "acceptance-criteria"
+
+  - step: 7
+    name: "Form Patterns"
+    type: "agent"
+    agent: "uiux-designer"
+    execution: "inline"
+    tasks:
+      - "form-patterns"
+
+  - step: 8
+    name: "Kanban & Deals"
+    type: "agent"
+    agent: "uiux-designer"
+    execution: "inline"
+    tasks:
+      - "kanban-patterns"
+    agent: "product-designer"
+    execution: "inline"
+    tasks:
+      - "feature-scoping"
+
+  - step: 9
+    name: "Tasks & Calendar"
+    type: "agent"
+    agent: "uiux-designer"
+    execution: "inline"
+    tasks:
+      - "task-patterns"
+      - "calendar-patterns"
+
+  - step: 10
+    name: "Search & Notifications"
+    type: "agent"
+    agent: "uiux-designer"
+    execution: "inline"
+    tasks:
+      - "search-patterns"
+
+  - step: 11
+    name: "Implementation - Design System Core"
+    type: "agent"
+    agent: "frontend-ui-engineer"
+    execution: "inline"
+    tasks:
+      - "token-implementation"
+      - "component-library"
+
+  - step: 12
+    name: "Implementation - Composite Components"
+    type: "agent"
+    agent: "frontend-ui-engineer"
+    execution: "inline"
+    tasks:
+      - "composite-components"
+      - "layout-components"
+
+  - step: 13
+    name: "Implementation - Pages & Features"
+    type: "agent"
+    agent: "frontend-ui-engineer"
+    execution: "inline"
+    tasks:
+      - "responsive-patterns"
+
+  - step: 14
+    name: "Accessibility Implementation"
+    type: "agent"
+    agent: "accessibility-specialist"
+    execution: "inline"
+    tasks:
+      - "contrast-audit"
+      - "focus-management"
+      - "semantic-html"
+      - "aria-labels"
+    agent: "frontend-ui-engineer"
+    execution: "inline"
+    tasks:
+      - "accessibility-implementation"
+
+  - step: 15
+    name: "Accessibility Validation"
+    type: "agent"
+    agent: "accessibility-specialist"
+    execution: "inline"
+    tasks:
+      - "keyboard-navigation"
+      - "wcag-validation"
+      - "screen-reader-testing"
+
+  - step: 16
+    name: "Performance & Build Validation"
+    type: "agent"
+    agent: "frontend-ui-engineer"
+    execution: "inline"
+    tasks:
+      - "performance-optimization"
+      - "build-validation"
+
+  - step: 17
+    name: "Final Visual Review"
+    type: "checkpoint"
+    output_file: "squads/design-system-uiux-refinement/output/final-review.md"
+
+investigation:
+  enriched: false
+  profiles_analyzed: 0
+
+skills_installed:
+  - "template-designer"
+  - "image-ai-generator"
+  - "image-creator"
+  - "web_search"
+  - "web_fetch"
+
+formats_selected: []
+
+best_practices_consulted:
+  - "technical-writing"
+  - "data-analysis"
+  - "image-design"

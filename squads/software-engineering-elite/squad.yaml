@@ -1,0 +1,40 @@
+squad:
+  code: "software-engineering-elite"
+  name: "Elite Engineering Squad"
+  description: "Squad multidisciplinar sénior de engenharia de software para desenvolvimento de sistemas completos"
+
+pipeline:
+  - step: 1
+    name: "Briefing & Análise"
+    type: "agent"
+    agent: "cmo-mario-manager"
+    execution: "inline"
+  - step: 2
+    name: "Validação Técnica"
+    type: "checkpoint"
+    output_file: "squads/software-engineering-elite/output/technical-validation.md"
+  - step: 3
+    name: "Arquitetura"
+    type: "agent"
+    agent: "princip-pedro-principal"
+    execution: "inline"
+  - step: 4
+    name: "Estrutura do Projeto"
+    type: "agent"
+    agent: "plat-gilberto-gestao"
+    execution: "inline"
+  - step: 5
+    name: "Database & RLS"
+    type: "agent"
+    agent: "db-dante-dados"
+    execution: "inline"
+  - step: 6
+    name: "Autenticação"
+    type: "agent"
+    agent: "sec-sofia-seguranca"
+    execution: "inline"
+  - step: 7
+    name: "Módulo Contactos/Empresas"
+    type: "agent"
+    agent: "back-bruno-backend"
+    execution: "inline"

@@ -1,0 +1,2 @@
+import Link from 'next/link';
+export default function BudgetSimulator(){return <section className="py-20"><div className="container-main max-w-3xl"><h2 className="text-3xl font-bold mb-5">Planear o investimento</h2><p className="text-text-secondary mb-6">O âmbito e as integrações determinam o investimento. Apresentamos os custos de implementação, serviços externos e manutenção separadamente, após o diagnóstico.</p><Link href="/contacto" className="btn-primary">Pedir uma proposta</Link></div></section>}

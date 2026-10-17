@@ -1,0 +1,6 @@
+id,name,role,agent_file
+product-designer,Product Designer,Experiência e Fluxos,product-designer.agent.md
+uiux-designer,UI/UX Designer,Hierarquia e Interface,uiux-designer.agent.md
+design-system-specialist,Design System Specialist,Consistência e Tokens,design-system-specialist.agent.md
+frontend-ui-engineer,Frontend UI Engineer,Implementação Técnica,frontend-ui-engineer.agent.md
+accessibility-specialist,Accessibility Specialist,Conformidade e Acessibilidade,accessibility-specialist.agent.md

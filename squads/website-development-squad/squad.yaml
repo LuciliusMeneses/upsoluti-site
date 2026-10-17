@@ -1,0 +1,17 @@
+name: Website Development Squad
+description: Squad para desenvolvimento de sites de alta conversão, focado em performance e experiência de usuário.
+pipeline:
+  - stage: planning
+    description: Definição de requisitos e fluxos.
+    agent: product-designer
+  - stage: design
+    description: Hierarquia, interface e design system.
+    agents: [uiux-designer, design-system-specialist]
+  - stage: frontend
+    description: Desenvolvimento técnico (React/Tailwind).
+    agent: frontend-ui-engineer
+  - stage: accessibility
+    description: Auditoria e ajustes de conformidade.
+    agent: accessibility-specialist
+memory: squads/website-development-squad/_memory/memories.md
+output_dir: c:\upsoluti\upsoluti.com

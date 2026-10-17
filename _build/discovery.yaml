@@ -1,0 +1,32 @@
+squad_code: "marketing-squad-elite"
+purpose: "Squad multidisciplinar sénior para gestão de marketing de ponta a ponta (estratégia, aquisição, conversão e retenção)."
+domain: "mixed"
+
+company:
+  name: "Não informado"
+  tone: "Profissional, Autoridade, Educativo, Direto"
+  products: "Não informado"
+
+language: "Português (Brasil)"
+
+context:
+  audience: "Potenciais clientes (Leads), Audiência geral (Branding), B2B"
+  platforms: "LinkedIn, Meta Ads, Google Ads, E-mail, Web"
+  tone: "Profissional e Autoritário, Educativo e Consultivo, Persuasivo e Direto"
+
+tools_needed:
+  - "CRM/Automation"
+  - "Analytics/BI"
+  - "SEO tools"
+  - "Ads platforms"
+
+investigation:
+  enabled: false
+  profiles: []
+
+target_formats:
+  - "linkedin-post"
+  - "linkedin-article"
+  - "email-newsletter"
+  - "blog-post"
+  - "email-sales"

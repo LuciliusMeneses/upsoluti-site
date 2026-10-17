@@ -1,0 +1,27 @@
+squad_code: "software-engineering-elite"
+purpose: "Squad multidisciplinar sénior de engenharia de software para desenvolvimento de sistemas completos, abrangendo arquitetura, desenvolvimento, testes, segurança, DevOps, IA/LLM e manutenção."
+domain: "mixed"
+
+company:
+  name: "Não informado"
+  tone: "Técnico, Rigoroso, Modular, Seguro por defeito"
+  products: "Sistemas completos, SaaS, APIs, Plataformas de IA"
+
+language: "Português (Brasil)"
+
+context:
+  audience: "Equipas de engenharia e desenvolvimento de software"
+  platforms: "Web, Cloud, AI/LLM, APIs, Microserviços"
+  tone: "Profissional, Técnico, Rigoroso, Orientado a Padrões de Indústria"
+
+tools_needed:
+  - "GitHub Actions"
+  - "Docker/K8s"
+  - "Terraform"
+  - "PostgreSQL/Supabase"
+
+investigation:
+  enabled: false
+  profiles: []
+
+target_formats: []

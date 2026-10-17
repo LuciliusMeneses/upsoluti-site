@@ -1,0 +1,24 @@
+﻿const fs=require('fs'),ts=require('typescript'),assert=require('node:assert/strict');
+const code=ts.transpileModule(fs.readFileSync('src/lib/contact.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText;const optionsCode=ts.transpileModule(fs.readFileSync('src/lib/lead-options.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText;const options={};new Function('exports',optionsCode)(options);const moduleLead={exports:{}};new Function('exports','require',code)(moduleLead.exports,()=>options);const {parseLead}=moduleLead.exports;
+let fetchCalls=[];let upstreamStatus=204;let throwNetwork=false;
+const routeCode=ts.transpileModule(fs.readFileSync('src/app/api/contact/route.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText;
+const route={exports:{}};const next={NextResponse:{json:(body,init={})=>new Response(JSON.stringify(body),{...init,headers:{'Content-Type':'application/json',...init.headers}})}};
+new Function('exports','require','fetch',routeCode)(route.exports,id=>id==='next/server'?next:moduleLead.exports,async(url,init)=>{fetchCalls.push({url,init});if(throwNetwork)throw Error('network');return new Response(null,{status:upstreamStatus})});
+const valid={name:'  Test User ',email:'test@example.com',goal:'automatizar',message:'A real business request.',website:''};
+function request(body=valid,origin='https://upsoluti.com'){const req=new Request('https://upsoluti.com/api/contact',{method:'POST',headers:{origin,'Content-Type':'application/json'},body:JSON.stringify(body)});req.nextUrl=new URL(req.url);return req;}
+(async()=>{assert.equal(parseLead(valid).name,'Test User');for(const input of [null,[],{}, {...valid,email:'bad'}, {...valid,message:'short'}, {...valid,goal:'other'}, {...valid,name:42}, {...valid,message:'a'.repeat(4001)}])assert.equal(parseLead(input),null);
+assert.equal((await route.exports.POST(request({...valid,email:'bad'}))).status,400);
+assert.equal((await route.exports.POST(request(valid,'https://attacker.example'))).status,403);
+assert.equal((await route.exports.POST(request({...valid,website:'spam'}))).status,400);
+delete process.env.CONTACT_WEBHOOK_URL;assert.equal((await route.exports.POST(request())).status,503);assert.equal(fetchCalls.length,0);
+process.env.CONTACT_WEBHOOK_URL='https://crm.example.test/leads';process.env.CONTACT_WEBHOOK_TOKEN='test-token';
+assert.equal((await route.exports.POST(request({...valid,email:'delivery@example.com'}))).status,200);assert.equal(fetchCalls[0].init.headers.Authorization,'Bearer test-token');assert.equal(JSON.parse(fetchCalls[0].init.body).name,'Test User');
+upstreamStatus=500;assert.equal((await route.exports.POST(request({...valid,email:'failed@example.com'}))).status,502);throwNetwork=true;assert.equal((await route.exports.POST(request({...valid,email:'network@example.com'}))).status,502);throwNetwork=false;upstreamStatus=204;
+for(let i=0;i<5;i++)assert.equal((await route.exports.POST(request({...valid,email:'rate@example.com'}))).status,200);assert.equal((await route.exports.POST(request({...valid,email:'rate@example.com'}))).status,429);
+const proposal={...valid,formKind:'proposal',company:'Example Ltd',budget:'1000-3500',phone:'+351 910 000 000',companyWebsite:'www.example.com'};
+assert.equal(parseLead(proposal).companyWebsite,'https://www.example.com/');
+for(const invalid of [{...proposal,company:''},{...proposal,budget:''},{...proposal,budget:'invalid'},{...proposal,phone:'abc'},{...proposal,companyWebsite:'javascript:alert(1)'},{...proposal,companyWebsite:'https://name:password@example.com'}])assert.equal(parseLead(invalid),null);
+assert.equal((await route.exports.POST(request({...proposal,email:'proposal@example.com'}))).status,200);
+const delivered=JSON.parse(fetchCalls.at(-1).init.body);assert.equal(delivered.budget,'1000-3500');assert.equal(delivered.phone,proposal.phone);assert.equal(delivered.companyWebsite,'https://www.example.com/');
+console.log('PASS: validation, origins, honeypot, configuration, accepted delivery, rejected delivery, network failure and rate limiting.');
+})().catch(e=>{console.error(e);process.exitCode=1});

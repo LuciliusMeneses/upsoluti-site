@@ -1,0 +1,9 @@
+export type ChatRole = 'user' | 'assistant';
+export type ChatMessage = { id: string; role: ChatRole; text: string; createdAt: string; serviceSlug?: string };
+export type ChatProfile = { name?: string; email?: string; phone?: string; company?: string; interest?: string };
+export type LeadStatus = 'pending' | 'synced';
+export type ChatConversation = { id: string; messages: ChatMessage[]; profile: ChatProfile; leadStatus: LeadStatus | null; expiresAt: string };
+export type ChatConfig = { aiAvailable: boolean; bookingUrl: string | null; retentionDays: number };
+export type ChatReply = { answer: string; interest: string; serviceSlug: string; contact: ChatProfile; handoff: boolean };
+export const CHAT_COOKIE = 'upsoluti_chat';
+export const MAX_MESSAGE_LENGTH = 1500;

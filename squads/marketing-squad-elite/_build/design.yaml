@@ -1,0 +1,42 @@
+squad:
+  code: "marketing-squad-elite"
+  name: "Elite Marketing Squad"
+  description: "Squad multidisciplinar sénior para gestão de marketing de ponta a ponta"
+
+agents:
+  - id: cmo-ana-arquiteta
+    name: "Ana Arquiteta"
+    title: "Marketing Director / CMO"
+    icon: "🧠"
+    execution: "inline"
+    role_summary: "Líder estratégica do squad, define objetivos, KPIs e coordena a atuação dos especialistas."
+    tasks:
+      - name: "briefing-management"
+        file: "tasks/briefing-management.md"
+        description: "Coordena o briefing e a definição de estratégia com outros agentes."
+  - id: brand-bruno-brand
+    name: "Bruno Brand"
+    title: "Brand Strategist"
+    icon: "🏷️"
+    execution: "inline"
+    role_summary: "Garante a consistência de marca, identidade e voz em todos os pontos de contato."
+    tasks:
+      - name: "brand-strategy"
+        file: "tasks/brand-strategy.md"
+        description: "Define diretrizes de marca para campanhas e conteúdos."
+  # ... (agentes continuam seguindo o padrão, omitidos para brevidade no exemplo lógico)
+
+pipeline:
+  - step: 1
+    name: "Briefing"
+    type: "agent"
+    agent: "cmo-ana-arquiteta"
+    execution: "inline"
+  # ... (pipeline continua)
+
+formats_selected:
+  - "linkedin-post"
+  - "linkedin-article"
+  - "email-newsletter"
+  - "blog-post"
+  - "email-sales"

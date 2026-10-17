@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "PowerShell(npm run build)",
+      "mcp__playwright__browser_navigate",
+      "Bash(dir c:\\\\upsoluti\\\\_opensquad)",
+      "mcp__playwright__browser_take_screenshot"
+    ]
+  }
+}

@@ -1,0 +1,2 @@
+# Tarefa: Padrões de Tabelas
+Definir padrão profissional de tabelas: cabeçalho claro, alinhamento consistente, hover, sorting, filters, search, bulk selection, actions discretas, pagination, empty state, loading state.
