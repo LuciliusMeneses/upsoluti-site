@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { services, solutions } from '@/lib/navigation';
@@ -18,7 +17,7 @@ export default function Header() {
  }, []);
  return <header ref={ref} className="header" onKeyDown={e => { if(e.key === 'Escape') { const trigger = ref.current?.querySelector<HTMLButtonElement>('[aria-expanded="true"]'); close(); trigger?.focus(); } }}>
   <div className="container-main header-inner">
-   <Link href="/" className="logo" onClick={close} aria-label="UPsoluti — início"><Image src="/brand/upsoluti-white.png" alt="UPsoluti — Marketing Inteligente" width={1291} height={354} priority className="header-brand-image"/></Link>
+   <Link href="/" className="logo" onClick={close} aria-label="UPsoluti — início"><span role="img" aria-label="UPsoluti — Marketing Inteligente" className="header-brand-image"/></Link>
    <nav className="nav-desktop" aria-label="Navegação principal">
     {[{href:'/',label:'Início'},{href:'/sobre',label:'Sobre nós'}].map(item => <Link key={item.href} href={item.href} className="nav-link" aria-current={path === item.href ? 'page' : undefined} onClick={close}>{item.label}</Link>)}
     {[{id:'solutions',label:'Soluções',items:solutions},{id:'services',label:'Serviços',items:services}].map(group => <div key={group.id} className="nav-dropdown" onBlur={e => { if(!e.currentTarget.contains(e.relatedTarget)) setDropdown(null); }}>
