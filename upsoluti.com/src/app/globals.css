@@ -164,7 +164,7 @@
 
   .header-brand-image {
     display: block;
-    width: 133px;
+    width: 159.6px;
     aspect-ratio: 1291 / 354;
     background-color: #2B183A;
     -webkit-mask: url('/brand/upsoluti-white.png') center / contain no-repeat;
@@ -180,7 +180,7 @@
   }
 
   @media (max-width: 480px) {
-    .header-brand-image { width: 112px; }
+    .header-brand-image { width: 134.4px; }
   }
 
   .nav-desktop {
