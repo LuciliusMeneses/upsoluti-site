@@ -2,6 +2,15 @@ const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),asse
 const dir=fs.mkdtempSync(path.join(os.tmpdir(),'upsoluti-memory-'));process.env.CHAT_STORAGE_PATH=path.join(dir,'test.sqlite');
 const cache=new Map();function load(file){file=path.resolve(file);if(cache.has(file))return cache.get(file);const out={};cache.set(file,out);const code=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText;new Function('exports','require',code)(out,id=>id.startsWith('.')?load(path.resolve(path.dirname(file),id)+'.ts'):require(id));return out;}
 const store=load('src/lib/chat/store.ts'),memory=load('src/lib/chat/memory.ts'),kb=load('src/lib/chat/service-contexts.ts'),provider=load('src/lib/chat/provider.ts');
+const intake=load('src/lib/chat/intake.ts');
+const user=text=>({role:'user',text}), assistant=text=>({role:'assistant',text});
+assert.ok(intake.anaGreeting.includes('Ana, atendente virtual da UPsoluti'));
+assert.ok(intake.intakeInstructions([user('Maria')],{}).includes('extrai-o para contact.name'));
+assert.ok(intake.intakeInstructions([user('Maria'),assistant('Como posso ajudar?'),user('Preciso de SEO')],{name:'Maria'}).includes('pede apenas o número de telefone'));
+const phoneAsked=[user('Maria'),assistant('Como posso ajudar?'),user('SEO'),assistant('Qual o telefone?'),user('910000000')];
+assert.ok(intake.intakeInstructions(phoneAsked,{}).includes('pede apenas o e-mail'));
+assert.ok(!intake.intakeInstructions([...phoneAsked,assistant('Qual o e-mail?'),user('m@example.com')],{}).includes('pede apenas'));
+assert.ok(!intake.intakeInstructions(Array.from({length:4},()=>user('SEO')),{phone:'910000000',email:'m@example.com'}).includes('pede apenas'));
 (async()=>{const originalFetch=global.fetch;try{
  const first=store.createConversation(),other=store.createConversation();
  store.setConversationProfile(first.conversation.id,{memoryEnabled:true});store.saveUserMessage(first.conversation.id,'request','Preciso automatizar o acompanhamento do CRM');
