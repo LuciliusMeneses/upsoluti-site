@@ -50,7 +50,7 @@ export function parseProviderReply(raw: string, messages: ChatMessage[]): ChatRe
 
 export async function generateReply(messages: ChatMessage[], signal?: AbortSignal, profile:ChatProfile={}): Promise<ChatReply> {
   const context=conversationContext(messages,profile);
-  const question=messages.filter(m=>m.role==='user').slice(-4).map(m=>m.text).join(' ');
+  const question=[...context.previousConversations,...messages.filter(m=>m.role==='user').slice(-4).map(m=>m.text)].join(' ');
   const config = providerConfig();
   if (!config) throw new Error('provider_not_configured');
   const response = await fetch(config.endpoint, {

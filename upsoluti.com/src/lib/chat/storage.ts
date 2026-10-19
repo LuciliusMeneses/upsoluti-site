@@ -9,7 +9,7 @@ async function call<T>(action:string,data:Record<string,unknown>):Promise<T>{
  if(url.protocol!=='https:'||url.username||url.password)throw Error('invalid_storage_url');
  const token=process.env.CHAT_LEAD_WEBHOOK_TOKEN||process.env.CONTACT_WEBHOOK_TOKEN;
  if(!token)throw Error('storage_not_configured');
- const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify({action,data}),cache:'no-store',redirect:'error',signal:AbortSignal.timeout(8000)});
+ const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify({action,data}),cache:'no-store',redirect:'error',signal:AbortSignal.timeout(20000)});
  if(!res.ok)throw Error('storage_unavailable');const result=await res.json();if(!Object.hasOwn(result,'data'))throw Error('storage_invalid_reply');return result.data as T;
 }
 const local=()=>import('./store');
