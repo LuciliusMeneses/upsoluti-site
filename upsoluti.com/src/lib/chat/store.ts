@@ -49,9 +49,21 @@ export function getConversation(token?: string): ChatConversation | null {
   return { id: String(row.id), messages, profile: JSON.parse(String(row.profile)), leadStatus: lead ? String(lead.status) as LeadStatus : null, expiresAt: new Date(Number(row.expires_at)).toISOString() };
 }
 
-export function deleteConversation(id: string) { getDatabase().prepare('DELETE FROM chat_sessions WHERE id=?').run(id); }
+export function setConversationProfile(id:string,profile:ChatProfile){getDatabase().prepare('UPDATE chat_sessions SET profile=? WHERE id=?').run(JSON.stringify(profile),id);}
+export function restartConversation(token:string,profile:ChatProfile){
+ const old=getConversation(token);if(!old)throw Error('unknown_session');
+ const group=old.profile.memoryGroup||randomUUID();
+ const db=getDatabase();db.exec('BEGIN IMMEDIATE');
+ try{setConversationProfile(old.id,{...old.profile,memoryGroup:group});const created=createConversation();setConversationProfile(created.conversation.id,{...profile,memoryGroup:group});db.prepare('UPDATE chat_sessions SET expires_at=? WHERE id=?').run(Date.parse(old.expiresAt),created.conversation.id);db.exec('COMMIT');return {token:created.token,conversation:getConversation(created.token)!};}catch(e){db.exec('ROLLBACK');throw e;}
+}
+export function deleteConversation(id: string) {
+ const db=getDatabase(),row=db.prepare('SELECT profile FROM chat_sessions WHERE id=?').get(id);
+ const group=row?JSON.parse(String(row.profile)).memoryGroup:undefined;
+ if(group)db.prepare("DELETE FROM chat_sessions WHERE json_extract(profile,'$.memoryGroup')=?").run(group);
+ else db.prepare('DELETE FROM chat_sessions WHERE id=?').run(id);
+}
 export function acquireConversation(id: string) {
-  return Number(getDatabase().prepare('UPDATE chat_sessions SET busy_until=? WHERE id=? AND busy_until<?').run(Date.now() + 45000, id, Date.now()).changes) === 1;
+  return Number(getDatabase().prepare('UPDATE chat_sessions SET busy_until=? WHERE id=? AND busy_until<?').run(Date.now() + 90000, id, Date.now()).changes) === 1;
 }
 export function releaseConversation(id: string) { getDatabase().prepare('UPDATE chat_sessions SET busy_until=0 WHERE id=?').run(id); }
 export function saveUserMessage(sessionId: string, requestId: string, text: string) {

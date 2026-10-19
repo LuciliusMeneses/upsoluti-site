@@ -1,0 +1,7 @@
+const fs=require('node:fs'),path=require('node:path'),ts=require('typescript');
+const cache=new Map();
+function load(file){file=path.resolve(file);if(cache.has(file))return cache.get(file);const out={};cache.set(file,out);const code=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;new Function('exports','require',code)(out,id=>load(path.resolve(path.dirname(file),id)+'.ts'));return out;}
+const {serviceContexts,knowledgeVersion}=load('src/lib/chat/service-contexts.ts'),{servicesData}=load('src/lib/services.ts');
+fs.mkdirSync('knowledge/services',{recursive:true});
+for(const [slug,c]of Object.entries(serviceContexts)){const service=servicesData[slug];const list=items=>items.map(v=>'- '+v).join('\n');const text=`# ${service.name}\n\nVersão: ${knowledgeVersion}. Fonte: services.ts e service-contexts.ts. Estado: contexto oficial do serviço, sem dados de visitantes.\n\n${service.description}\n\n## Diagnóstico\n\n${list(c.diagnosis)}\n\n## Aplicações\n\n${list(c.applications)}\n\n## Medição\n\n${list(c.measure)}\n\n## Limites\n\n${list(c.limits)}\n\n## Serviços relacionados\n\n${list(c.related.map(s=>servicesData[s].name+' — /servicos/'+s))}\n\n## Perguntas frequentes publicadas\n\n${service.faqs.map(f=>'### '+f.q+'\n\n'+f.a).join('\n\n')}\n`;fs.writeFileSync('knowledge/services/'+slug+'.md',text);}
+console.log('Exported '+Object.keys(serviceContexts).length+' service contexts.');
