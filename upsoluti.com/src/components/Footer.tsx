@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="container-main">
         <div className="footer-grid">
           <div className="footer-brand">
-            <Link href="/" className="footer-logo" aria-label="UPsoluti — início"><Image src="/brand/upsoluti-white.png" alt="UPsoluti — Marketing Inteligente" width={1291} height={354} className="footer-brand-image"/></Link>
+            <Link href="/" className="footer-logo" aria-label="UPsoluti — início"><Image src="/brand/upsoluti-symbol.png" alt="UPsoluti" width={577} height={253} className="footer-brand-image"/></Link>
             <p className="footer-desc">
               Tecnologia, Marketing e Inteligência Artificial para impulsionar empresas para o próximo nível de eficiência e escala.
             </p>

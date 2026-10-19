@@ -171,9 +171,10 @@
 
   .footer-brand-image {
     display: block;
-    width: 250px;
+    width: 150px;
     max-width: 100%;
     height: auto;
+    filter: brightness(0) invert(1);
   }
 
   @media (max-width: 480px) {
