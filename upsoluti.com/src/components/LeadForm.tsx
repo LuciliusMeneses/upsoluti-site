@@ -9,6 +9,7 @@ import { budgets, goals } from '@/lib/lead-options';
 export default function LeadForm({ compact = false }: { compact?: boolean }) {
   const id = useId();
   const busy = useRef(false);
+  const pending = useRef<{ payload: string; id: string } | null>(null);
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [error, setError] = useState('');
   const [goal, setGoal] = useState('');
@@ -29,14 +30,16 @@ export default function LeadForm({ compact = false }: { compact?: boolean }) {
     setError('');
     const data = Object.fromEntries(new FormData(event.currentTarget));
     const query = new URLSearchParams(window.location.search);
+    const payload = JSON.stringify({ ...data, formKind: compact ? 'contact' : 'proposal', source: window.location.pathname, utm_source: query.get('utm_source') || '', utm_medium: query.get('utm_medium') || '', utm_campaign: query.get('utm_campaign') || '', origin: query.get('origem') || '' });
+    if (!pending.current || pending.current.payload !== payload) pending.current = { payload, id: crypto.randomUUID() };
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 12000);
 
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, formKind: compact ? 'contact' : 'proposal', source: window.location.pathname, utm_source: query.get('utm_source') || '', utm_medium: query.get('utm_medium') || '', utm_campaign: query.get('utm_campaign') || '', origin: query.get('origem') || '' }),
+        headers: { 'Content-Type': 'application/json', 'Idempotency-Key': pending.current.id },
+        body: payload,
         signal: controller.signal,
       });
       if (!response.ok) throw new Error(response.status === 429

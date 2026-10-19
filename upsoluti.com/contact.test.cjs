@@ -3,9 +3,9 @@ const code=ts.transpileModule(fs.readFileSync('src/lib/contact.ts','utf8'),{comp
 let fetchCalls=[];let upstreamStatus=204;let throwNetwork=false;
 const routeCode=ts.transpileModule(fs.readFileSync('src/app/api/contact/route.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText;
 const route={exports:{}};const next={NextResponse:{json:(body,init={})=>new Response(JSON.stringify(body),{...init,headers:{'Content-Type':'application/json',...init.headers}})}};
-new Function('exports','require','fetch',routeCode)(route.exports,id=>id==='next/server'?next:moduleLead.exports,async(url,init)=>{fetchCalls.push({url,init});if(throwNetwork)throw Error('network');return new Response(null,{status:upstreamStatus})});
+new Function('exports','require','fetch',routeCode)(route.exports,id=>id==='next/server'?next:id==='node:crypto'?require('node:crypto'):moduleLead.exports,async(url,init)=>{fetchCalls.push({url,init});if(throwNetwork)throw Error('network');return new Response(null,{status:upstreamStatus})});
 const valid={name:'  Test User ',email:'test@example.com',goal:'automatizar',message:'A real business request.',website:''};
-function request(body=valid,origin='https://upsoluti.com'){const req=new Request('https://upsoluti.com/api/contact',{method:'POST',headers:{origin,'Content-Type':'application/json'},body:JSON.stringify(body)});req.nextUrl=new URL(req.url);return req;}
+function request(body=valid,origin='https://upsoluti.com',headers={}){const req=new Request('https://upsoluti.com/api/contact',{method:'POST',headers:{origin,'Content-Type':'application/json',...headers},body:JSON.stringify(body)});req.nextUrl=new URL(req.url);return req;}
 (async()=>{assert.equal(parseLead(valid).name,'Test User');for(const input of [null,[],{}, {...valid,email:'bad'}, {...valid,message:'short'}, {...valid,goal:'other'}, {...valid,name:42}, {...valid,message:'a'.repeat(4001)}])assert.equal(parseLead(input),null);
 assert.equal((await route.exports.POST(request({...valid,email:'bad'}))).status,400);
 assert.equal((await route.exports.POST(request(valid,'https://attacker.example'))).status,403);
@@ -20,5 +20,9 @@ assert.equal(parseLead(proposal).companyWebsite,'https://www.example.com/');
 for(const invalid of [{...proposal,company:''},{...proposal,budget:''},{...proposal,budget:'invalid'},{...proposal,phone:'abc'},{...proposal,companyWebsite:'javascript:alert(1)'},{...proposal,companyWebsite:'https://name:password@example.com'}])assert.equal(parseLead(invalid),null);
 assert.equal((await route.exports.POST(request({...proposal,email:'proposal@example.com'}))).status,200);
 const delivered=JSON.parse(fetchCalls.at(-1).init.body);assert.equal(delivered.budget,'1000-3500');assert.equal(delivered.phone,proposal.phone);assert.equal(delivered.companyWebsite,'https://www.example.com/');
+assert.match(fetchCalls[0].init.headers['Idempotency-Key'], /^[a-f0-9-]{36}$/i);
+const eventId='11111111-1111-4111-8111-111111111111';
+assert.equal((await route.exports.POST(request({...valid,email:'retry@example.com'},'https://upsoluti.com',{'Idempotency-Key':eventId}))).status,200);assert.equal(fetchCalls.at(-1).init.headers['Idempotency-Key'],eventId);
+const before=fetchCalls.length;assert.equal((await route.exports.POST(request({...valid,email:'invalid-key@example.com'},'https://upsoluti.com',{'Idempotency-Key':'invalid'}))).status,400);assert.equal(fetchCalls.length,before);
 console.log('PASS: validation, origins, honeypot, configuration, accepted delivery, rejected delivery, network failure and rate limiting.');
 })().catch(e=>{console.error(e);process.exitCode=1});

@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import { NextRequest, NextResponse } from 'next/server';
 import { parseLead } from '@/lib/contact';
 export const runtime='nodejs';
@@ -16,12 +17,14 @@ export async function POST(req:NextRequest) {
  if(bucket.count>=5)return NextResponse.json({error:'Aguarde antes de tentar novamente'},{status:429,headers:{'Retry-After':String(Math.ceil((bucket.reset-now)/1000))}});
  if(attempts.size>10000)return NextResponse.json({error:'Tente mais tarde'},{status:503});
  bucket.count++;attempts.set(key,bucket);
+ const eventId=req.headers.get('idempotency-key') || randomUUID();
+ if(!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(eventId))return NextResponse.json({error:'Pedido inválido'},{status:400});
  const webhook=process.env.CONTACT_WEBHOOK_URL;
  if(!webhook)return NextResponse.json({error:'Serviço de contacto indisponível'},{status:503});
  try {
-  const url=new URL(webhook);if(url.protocol!=='https:' && !(process.env.NODE_ENV!=='production' && ['localhost','127.0.0.1'].includes(url.hostname)))throw new Error('Invalid webhook');
-  const response=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json',...(process.env.CONTACT_WEBHOOK_TOKEN?{Authorization:'Bearer '+process.env.CONTACT_WEBHOOK_TOKEN}:{})},body:JSON.stringify({...lead,receivedAt:new Date().toISOString()}),signal:AbortSignal.timeout(8000),redirect:'error',cache:'no-store'});
-  if(!response.ok)throw new Error('Delivery failed');
+  const url=new URL(webhook);if(url.username || url.password || (url.protocol!=='https:' && !(process.env.WEBHOOK_ALLOW_LOCAL_HTTP==='true' && ['localhost','127.0.0.1'].includes(url.hostname))))throw new Error('Invalid webhook');
+  const response=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','Idempotency-Key':eventId,...(process.env.CONTACT_WEBHOOK_TOKEN?{Authorization:'Bearer '+process.env.CONTACT_WEBHOOK_TOKEN}:{})},body:JSON.stringify({...lead,receivedAt:new Date().toISOString()}),signal:AbortSignal.timeout(8000),redirect:'error',cache:'no-store'});
+  if(!response.ok){console.error('[contact] webhook rejected delivery',{status:response.status,eventId});throw new Error('Delivery failed');}
   return NextResponse.json({ok:true});
  }catch{return NextResponse.json({error:'Não foi possível entregar a mensagem'},{status:502});}
 }
