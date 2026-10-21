@@ -1,14 +1,14 @@
 import './home.css';
 import Link from 'next/link';
-import { ArrowUpRight, Bot, Code2, Workflow, TrendingUp, ChevronDown, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Bot, Code2, Workflow, TrendingUp, ChevronDown, Sparkles, ShieldCheck, Blocks, ScanLine } from 'lucide-react';
 import HeroSection from '@/components/HeroSection';
 import ContactForm from '@/components/ContactForm';
 import QuickDiagnostic from '@/components/QuickDiagnostic';
 
 const steps = [
-  { number: '01', title: 'Entender', description: 'O seu desafio define o ponto de partida.' },
-  { number: '02', title: 'Construir', description: 'Ligamos as ferramentas certas ao seu negócio.' },
-  { number: '03', title: 'Evoluir', description: 'Acompanhamos, medimos e melhoramos.' },
+  { number: '01', title: 'Entender', description: 'Identificamos os processos, as limitações e a prioridade do seu negócio.' },
+  { number: '02', title: 'Construir', description: 'Desenvolvemos a solução e ligamos as ferramentas à sua operação.' },
+  { number: '03', title: 'Evoluir', description: 'Acompanhamos a utilização, medimos e melhoramos consigo.' },
 ];
 
 export default function Home() {
@@ -47,6 +47,17 @@ export default function Home() {
           <div className="ai-process-heading"><p className="ai-eyebrow">Da ideia à operação</p><h2 id="process-title">Um caminho simples.</h2></div>
           <ol className="ai-process-steps">{steps.map(step => <li key={step.number}><span className="ai-step-number">{step.number}</span><div><h3>{step.title}</h3><p>{step.description}</p></div></li>)}</ol>
           <details className="ai-diagnostic-disclosure"><summary><span><Sparkles size={17} aria-hidden="true" />Ainda não sabe por onde começar?</span><span className="ai-disclosure-action">Descubra a sua prioridade <ChevronDown size={17} aria-hidden="true" /></span></summary><div className="ai-diagnostic-content"><QuickDiagnostic /></div></details>
+        </div>
+      </section>
+      <section className="ai-principles" aria-labelledby="principles-title">
+        <div className="container-main">
+          <p className="ai-eyebrow">Tecnologia com critério</p>
+          <h2 id="principles-title">Pensada para a sua operação.</h2>
+          <div className="ai-principles-grid">
+            <article><ShieldCheck size={22} aria-hidden="true" /><h3>Segurança desde o início</h3><p>Permissões, privacidade e tratamento de dados fazem parte das decisões de projeto.</p></article>
+            <article><Blocks size={22} aria-hidden="true" /><h3>Engenharia que conecta</h3><p>Software, CRM e automação integrados, com atenção à manutenção e à evolução.</p></article>
+            <article><ScanLine size={22} aria-hidden="true" /><h3>Clareza para avançar</h3><p>Objetivos definidos, validação por etapas e acompanhamento próximo da equipa.</p></article>
+          </div>
         </div>
       </section>
       <ContactForm />

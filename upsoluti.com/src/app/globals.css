@@ -1701,3 +1701,14 @@ details[open] > summary.faq-question::after { content: "−"; }
   .growth-proposal-card h3 { font-size: 23px; }
   .growth-needs { gap: 18px; }
 }
+
+/* Shared refinement: retain official branding and navigation structure. */
+.header { border-bottom: 1px solid #2b183a12; box-shadow: 0 4px 24px #2b183a05; backdrop-filter: blur(16px); }
+.header .nav-link, .header .nav-dropdown-trigger { min-height: 44px; display: inline-flex; align-items: center; }
+.header .nav-dropdown-menu { border-radius: 16px; box-shadow: 0 18px 50px #2b183a14; }
+.header .nav-dropdown-item { border-radius: 8px; }
+.header .mobile-nav-link { min-height: 44px; }
+.header a:focus-visible, .header button:focus-visible { outline: 2px solid #8b1db8; outline-offset: 4px; border-radius: 5px; }
+.footer a:focus-visible { outline: 2px solid #dfaff8; outline-offset: 5px; border-radius: 4px; }
+.proposal-field input:focus-visible, .proposal-field select:focus-visible, .proposal-field textarea:focus-visible { outline: 2px solid #dfaff8; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
