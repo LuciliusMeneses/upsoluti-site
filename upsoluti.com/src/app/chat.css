@@ -37,3 +37,6 @@
 @keyframes chat-fx-scan { 0%,25% { background-position: 180% 0; } 65%,100% { background-position: -80% 0; } }
 @keyframes chat-fx-glow { 0%,100% { box-shadow: 0 10px 30px #0b081c55,0 0 18px #ad50dd33; } 50% { box-shadow: 0 10px 35px #0b081c55,0 0 26px #ad50dd55,0 0 10px #8fefff22; } }
 @media (prefers-reduced-motion: reduce) { .public-chat *, .public-chat *::before, .public-chat *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+.chat-capture-status { flex-shrink: 0; padding: 12px 18px; border-bottom: 1px solid #ffffff12; color: #d8c4e6; font-size: 12px; line-height: 1.7; }
+.chat-capture-status .chat-consent { margin-bottom: 0; }
+.chat-automatic-consent { margin: 14px 0; }

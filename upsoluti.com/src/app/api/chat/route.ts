@@ -1,17 +1,22 @@
 import {visitorMemory} from '@/lib/chat/memory';
 import { NextRequest } from 'next/server';
 import { randomBytes } from 'node:crypto';
-import { CHAT_COOKIE, MAX_MESSAGE_LENGTH, type ChatConfig } from '@/lib/chat/types';
+import { CHAT_COOKIE, MAX_MESSAGE_LENGTH, type ChatConfig, type ChatConversation } from '@/lib/chat/types';
 import { setConversationProfile, restartConversation, acquireConversation, createConversation, deleteConversation, findReply, getConversation, getStoredLead, releaseConversation, requestText, retentionDays, saveLead, saveReply, saveUserMessage, consumeRateLimit } from '@/lib/chat/storage';
 import { generateReply, providerConfig } from '@/lib/chat/provider';
 import { deliverChatLead } from '@/lib/chat/handoff';
 import { chatJson, readChatBody, sameOrigin } from '@/lib/chat/http';
 import { parseLead } from '@/lib/contact';
+import { captureConversationLead } from '@/lib/chat/automatic-lead';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 export const maxDuration = 90;
 const rateSalt = randomBytes(16).toString('hex');
+async function captureSafely(session: ChatConversation, authorized: boolean, source: unknown) {
+  try { await captureConversationLead(session, authorized, source); }
+  catch { return 'A resposta foi guardada, mas não foi possível preparar o envio dos dados. Tente novamente ou use Falar com a equipa.'; }
+}
 function config(): ChatConfig {
   let bookingUrl: string | null = null;
   try { const url = new URL(process.env.NEXT_PUBLIC_BOOKING_URL || ''); if (url.protocol === 'https:' && !url.username && !url.password) bookingUrl = url.href; } catch { /* Optional booking is not configured. */ }
@@ -82,7 +87,11 @@ export async function POST(req: NextRequest) {
         const previous = await requestText(session.id, body.requestId);
         if (previous && previous !== body.message.trim()) return chatJson({ error: 'O pedido já foi utilizado com outra mensagem.' }, 409);
         const cached = await findReply(session.id, body.requestId);
-        if (cached) return chatJson({ reply: cached, conversation: await getConversation(token) });
+        if (cached) {
+          const current = (await getConversation(token))!;
+          const leadCaptureError = await captureSafely(current, body.leadConsent === true, body.source);
+          return chatJson({ reply: cached, leadCaptureError, conversation: await getConversation(token) });
+        }
         if (!providerConfig()) return chatJson({ error: 'A conversa IA está indisponível neste momento. Pode deixar um pedido para contacto ou escrever para contacto@upsoluti.com.' }, 503);
         if (session.messages.length >= 80) return chatJson({ error: 'Este atendimento atingiu o limite de mensagens. Pode deixar o pedido para a equipa.' }, 429);
         await saveUserMessage(session.id, body.requestId, body.message.trim());
@@ -90,7 +99,9 @@ export async function POST(req: NextRequest) {
         const reply = await generateReply(messages, req.signal, session.profile);
         const profile = { ...session.profile, ...reply.contact, ...(reply.interest ? { interest: reply.interest } : {}) };
         await saveReply(session.id, body.requestId, reply, profile);
-        return chatJson({ reply, conversation: await getConversation(token) });
+        // A delivery failure must not discard a valid AI reply. Pending leads remain retryable.
+        const leadCaptureError = await captureSafely((await getConversation(token))!, body.leadConsent === true, body.source);
+        return chatJson({ reply, leadCaptureError, conversation: await getConversation(token) });
       }
       if (body.consent !== true || !body.lead || typeof body.lead !== 'object' || Array.isArray(body.lead)) return chatJson({ error: 'Confirme os dados e autorize o envio do pedido.' }, 400);
       const raw = body.lead as Record<string, unknown>;
