@@ -1,0 +1,58 @@
+﻿/* Scoped exclusively to the nine solution/service pages. */
+.offering-page { background: #101019; }
+.offering-page .offering-hero { position: relative; isolation: isolate; overflow: hidden; padding: 24px 0 62px; min-height: 510px; border-bottom: 1px solid var(--inner-line); background: #101019; }
+.offering-page .offering-hero::before { content: ""; position: absolute; z-index: 1; inset: 0; pointer-events: none; background: linear-gradient(90deg,#101019 0%,#101019 27%,#101019f0 41%,#101019a6 55%,#10101919 78%),linear-gradient(0deg,#101019 0%,transparent 22%,transparent 85%,#10101999); }
+.offering-page .offering-hero > .container-main { position: relative; z-index: 2; }
+.offering-page .inner-breadcrumb { margin-bottom: 36px; }
+.offering-page .offering-hero-grid { padding: 20px 0; }
+.offering-page .offering-intro { width: 82%; max-width: 940px; }
+.offering-page .offering-intro h1 { max-width: 100%; font-size: clamp(2.3rem,4.1vw,3.9rem); font-weight: 550; line-height: 1.1; letter-spacing: -.045em; text-wrap: balance; }
+.offering-page .offering-intro h1 span { display: block; color: var(--inner-accent); }
+.offering-page .offering-description { margin: 24px 0; max-width: 580px; color: var(--inner-muted); font-size: 16px; line-height: 1.85; }
+.offering-page .offering-tags { display: flex; flex-wrap: wrap; gap: 10px 18px; list-style: none; padding: 0; margin: 0 0 28px; }
+.offering-page .offering-tags li { display: flex; gap: 7px; align-items: center; color: #d5c9e0; font-size: 12px; }
+.offering-page .offering-tags svg { color: var(--inner-accent); }
+.offering-page .offering-art { position: absolute; z-index: 0; inset: 0 0 0 auto; width: min(64%,1000px); pointer-events: none; }
+.offering-page .offering-art img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: right center; }
+.offering-page .offering-section { padding: 56px 0; }
+.offering-page .offering-section-heading { margin-bottom: 28px; }
+.offering-page .offering-section-heading h2 { font-size: clamp(1.7rem,2.8vw,2.3rem); line-height: 1.2; font-weight: 550; letter-spacing: -.035em; }
+.offering-page .offering-benefits { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 30px; }
+.offering-page .offering-benefits article { padding-top: 22px; border-top: 1px solid var(--inner-line); }
+.offering-page .offering-benefits svg { margin-bottom: 18px; color: var(--inner-accent); }
+.offering-page .offering-benefits h3, .offering-page .offering-capability h3 { font-size: 18px; font-weight: 550; line-height: 1.3; letter-spacing: -.02em; margin-bottom: 10px; }
+.offering-page .offering-benefits p, .offering-page .offering-capability p { color: var(--inner-muted); font-size: 14px; line-height: 1.75; }
+.offering-page .offering-delivery { padding-top: 16px; }
+.offering-page .offering-capabilities { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 16px; }
+.offering-page .offering-capability { display: block; min-width: 0; padding: 24px; border: 1px solid var(--inner-line); border-radius: 18px; background: linear-gradient(140deg,#a326d707,transparent),#171621; text-decoration: none; color: inherit; }
+.offering-page a.offering-capability { transition: border-color .2s,background .2s; }
+.offering-page a.offering-capability:hover { border-color: #c58de960; background: #21192b; }
+.offering-page .offering-index { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; color: #c3a3db; font-family: var(--font-mono); font-size: 11px; }
+.offering-page .offering-note { color: #b5acc3; font-size: 12px; line-height: 1.8; margin-top: 24px; max-width: 850px; }
+.offering-page .offering-related { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 20px; }
+.offering-page .offering-related a { display: inline-flex; align-items: center; gap: 6px; color: #dbb5f1; font-size: 12px; padding: 8px 0; text-decoration: none; }
+.offering-page .inner-section-cta { padding-top: 12px; }
+.offering-page a:focus-visible { outline: 2px solid #dfaff8; outline-offset: 5px; border-radius: 6px; }
+@media (max-width: 899px) {
+  .offering-page .offering-intro { width: 100%; }
+  .offering-page .offering-art { width: 80%; opacity: .65; }
+  .offering-page .offering-hero::before { background: linear-gradient(90deg,#101019f7,#101019dd 45%,#10101999),linear-gradient(0deg,#101019,transparent 60%); }
+  .offering-page .offering-intro h1 { max-width: 720px; font-size: clamp(2.4rem,6.5vw,3.8rem); }
+  .offering-page .offering-description { max-width: 700px; }
+}
+@media (max-width: 599px) {
+  .offering-page .inner-breadcrumb { margin-bottom: 28px; }
+  .offering-page .offering-hero { padding-bottom: 36px; }
+  .offering-page .offering-intro h1 { font-size: clamp(2.1rem,8.2vw,3rem); }
+  .offering-page .offering-description { font-size: 15px; margin: 20px 0; }
+  .offering-page .offering-art { width: 100%; height: 380px; top: 60px; opacity: .55; }
+  .offering-page .offering-hero-grid { padding-top: 8px; }
+  .offering-page .offering-hero { min-height: 0; }
+  .offering-page .offering-benefits { grid-template-columns: 1fr; gap: 22px; }
+  .offering-page .offering-capabilities { grid-template-columns: 1fr; gap: 12px; }
+  .offering-page .offering-capability { padding: 20px; }
+  .offering-page .offering-index { margin-bottom: 18px; }
+  .offering-page .offering-section { padding: 36px 0; }
+  .offering-page .offering-delivery { padding-top: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .offering-page a.offering-capability { transition: none; } }

@@ -1,5 +1,5 @@
 import {conversationContext} from './memory';
-import {intakeInstructions} from './intake';
+import {intakeInstructions, withoutManualConfirmation} from './intake';
 import { chatInstructions } from './knowledge';
 import { getService } from '../services';
 import { validGoals } from '../contact';
@@ -29,8 +29,9 @@ export function parseProviderReply(raw: string, messages: ChatMessage[]): ChatRe
     value = { answer: cleaned };
   }
   if (!value || typeof value !== 'object' || typeof value.answer !== 'string' || !value.answer.trim()) throw new Error('invalid_provider_reply');
-  let answer = value.answer.trim().slice(0, 1800);
-  if (/(?:criei|registei|enviei|agendei|marquei|confirmo).{0,60}(?:lead|reunião|pedido|contacto)/i.test(answer)) answer = 'Posso ajudar a preparar o pedido. Use Falar com a equipa para confirmar os dados e escolher o próximo passo.';
+  let answer = withoutManualConfirmation(value.answer.trim().slice(0, 1800));
+  if (!answer) answer = 'Como posso ajudar com a necessidade da sua empresa?';
+  if (/(?:criei|registei|enviei|agendei|marquei|confirmo).{0,60}(?:lead|reunião|pedido|contacto)/i.test(answer)) answer = 'O estado do envio dos dados aparece nesta conversa. Como posso ajudar com o próximo passo?';
   const interest = typeof value.interest === 'string' && validGoals.includes(value.interest) ? value.interest : '';
   const serviceSlug = typeof value.serviceSlug === 'string' && getService(value.serviceSlug) ? value.serviceSlug : '';
   const contact: ChatProfile = {};

@@ -18,6 +18,7 @@ function load(file) {
   return mod.exports;
 }
 const store = load('src/lib/chat/store.ts'), route = load('src/app/api/chat/route.ts');
+const provider = load('src/lib/chat/provider.ts');
 const originalFetch = global.fetch;
 let deliveries = [], providerCalls = 0, rejectDelivery = false;
 global.fetch = async (url, options) => {
@@ -38,6 +39,8 @@ async function post(token, body) {
 }
 (async () => {
   try {
+    const cleaned = provider.parseProviderReply(JSON.stringify({ answer: 'Obrigado. Pode rever e confirmar o pedido no botão Falar com a equipa.' }), []);
+    assert.equal(cleaned.answer, 'Obrigado.');
     const a = store.createConversation();
     await post(a.token, { action: 'send', requestId: randomUUID(), message: 'Sou Teste Visual e quero automatizar vendas.', leadConsent: true });
     assert.equal(deliveries.length, 0, 'missing email must not create a lead');
