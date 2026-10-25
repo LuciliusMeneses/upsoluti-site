@@ -40,3 +40,20 @@
 .chat-capture-status { flex-shrink: 0; padding: 12px 18px; border-bottom: 1px solid #ffffff12; color: #d8c4e6; font-size: 12px; line-height: 1.7; }
 .chat-capture-status .chat-consent { margin-bottom: 0; }
 .chat-automatic-consent { margin: 14px 0; }
+
+/* Tabs and session preferences are siblings, preserving tablist semantics. */
+.chat-toolbar { display: flex; align-items: center; gap: 10px; flex-shrink: 0; padding: 8px 12px; border-bottom: 1px solid #ffffff12; }
+.chat-toolbar .chat-tabs { flex-shrink: 0; gap: 2px; padding: 0; border: 0; }
+.chat-toolbar .chat-memory-controls { flex: 1; min-width: 0; padding: 0; border: 0; background: transparent; gap: 6px 10px; }
+.chat-toolbar .chat-memory-controls label { min-width: 0; align-items: center; margin: 0; }
+.chat-toolbar .chat-memory-controls input { flex-shrink: 0; margin: 0; }
+.chat-toolbar .chat-memory-controls button { flex-shrink: 0; min-height: 40px; }
+@media (max-width: 639px) {
+  .chat-toolbar { gap: 6px; padding: 8px; }
+  .chat-toolbar .chat-tabs { flex-wrap: nowrap; }
+  .chat-toolbar .chat-tabs > button { padding: 5px; max-width: 64px; font-size: 10px; line-height: 1.4; }
+  .chat-toolbar .chat-history-actions .chat-icon-button { min-width: 22px; width: 22px; }
+  .chat-toolbar .chat-memory-controls { flex-wrap: nowrap; gap: 6px; }
+  .chat-toolbar .chat-memory-controls label { font-size: 9px; line-height: 1.5; }
+  .chat-toolbar .chat-memory-controls button { max-width: 54px; padding: 5px; font-size: 10px; line-height: 1.4; }
+}
