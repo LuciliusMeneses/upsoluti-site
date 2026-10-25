@@ -4,6 +4,8 @@ import { ArrowUpRight, Bot, Code2, Workflow, TrendingUp, ChevronDown, Sparkles, 
 import HeroSection from '@/components/HeroSection';
 import ContactForm from '@/components/ContactForm';
 import QuickDiagnostic from '@/components/QuickDiagnostic';
+import StructuredData from '@/components/StructuredData';
+import { siteUrl } from '@/lib/site';
 
 const steps = [
   { number: '01', title: 'Entender', description: 'Identificamos os processos, as limitações e a prioridade do seu negócio.' },
@@ -14,6 +16,10 @@ const steps = [
 export default function Home() {
   return (
     <main className="ai-home">
+      <StructuredData data={{ '@context': 'https://schema.org', '@graph': [
+        { '@type': 'Organization', '@id': siteUrl + '/#organization', name: 'UPsoluti', url: siteUrl + '/', logo: siteUrl + '/brand/upsoluti-symbol.png', email: 'contacto@upsoluti.com' },
+        { '@type': 'WebSite', '@id': siteUrl + '/#website', url: siteUrl + '/', name: 'UPsoluti', inLanguage: 'pt-PT', publisher: { '@id': siteUrl + '/#organization' } },
+      ] }} />
       <HeroSection />
       <section className="ai-solutions" id="solucoes" aria-labelledby="solutions-title">
         <div className="container-main">

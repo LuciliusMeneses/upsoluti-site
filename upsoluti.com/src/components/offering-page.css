@@ -56,3 +56,10 @@
   .offering-page .offering-delivery { padding-top: 8px; }
 }
 @media (prefers-reduced-motion: reduce) { .offering-page a.offering-capability { transition: none; } }
+.offering-guide { border-top: 1px solid #ffffff12; }
+.offering-guide h2 { max-width: 760px; font-size: clamp(1.5rem,3vw,2.2rem); line-height: 1.25; margin-bottom: 30px; }
+.offering-guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.offering-guide h3 { font-size: 17px; margin: 24px 0 10px; }
+.offering-guide h3:first-child { margin-top: 0; }
+.offering-guide p { color: #bdb2ca; font-size: 14px; line-height: 1.85; max-width: 65ch; }
+@media (max-width: 767px) { .offering-guide-grid { grid-template-columns: 1fr; gap: 24px; } }
