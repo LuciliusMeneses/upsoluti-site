@@ -30,7 +30,13 @@ export async function POST(req:NextRequest) {
   // resubmit a lead that was already accepted, or claim the lead was lost.
   let emailNotification:'sent'|'disabled'|'failed';
   try { emailNotification=await notifyContact(lead,eventId); }
-  catch { emailNotification='failed';console.error('[contact] email notification failed',{eventId}); }
+  catch(error) {
+   emailNotification='failed';
+   const smtpError=error as {code?:unknown;responseCode?:unknown};
+   const code=typeof smtpError?.code==='string' && /^E[A-Z_]{1,30}$/.test(smtpError.code)?smtpError.code:'UNKNOWN';
+   const responseCode=typeof smtpError?.responseCode==='number'?smtpError.responseCode:undefined;
+   console.error('[contact] email notification failed',{eventId,code,responseCode});
+  }
   return NextResponse.json({ok:true,emailNotification});
  }catch{return NextResponse.json({error:'Não foi possível entregar a mensagem'},{status:502});}
 }
