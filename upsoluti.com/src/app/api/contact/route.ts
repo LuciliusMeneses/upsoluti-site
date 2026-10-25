@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { NextRequest, NextResponse } from 'next/server';
 import { parseLead } from '@/lib/contact';
+import { notifyContact } from '@/lib/contact-email';
 export const runtime='nodejs';
 // Best-effort per-instance protection. Use a shared rate limiter at the edge for multiple instances.
 const attempts=new Map<string,{count:number;reset:number}>();
@@ -25,6 +26,11 @@ export async function POST(req:NextRequest) {
   const url=new URL(webhook);if(url.username || url.password || (url.protocol!=='https:' && !(process.env.WEBHOOK_ALLOW_LOCAL_HTTP==='true' && ['localhost','127.0.0.1'].includes(url.hostname))))throw new Error('Invalid webhook');
   const response=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','Idempotency-Key':eventId,...(process.env.CONTACT_WEBHOOK_TOKEN?{Authorization:'Bearer '+process.env.CONTACT_WEBHOOK_TOKEN}:{})},body:JSON.stringify({...lead,receivedAt:new Date().toISOString()}),signal:AbortSignal.timeout(8000),redirect:'error',cache:'no-store'});
   if(!response.ok){console.error('[contact] webhook rejected delivery',{status:response.status,eventId});throw new Error('Delivery failed');}
-  return NextResponse.json({ok:true});
+  // The CRM is the durable receipt. A mail failure must not make the visitor
+  // resubmit a lead that was already accepted, or claim the lead was lost.
+  let emailNotification:'sent'|'disabled'|'failed';
+  try { emailNotification=await notifyContact(lead,eventId); }
+  catch { emailNotification='failed';console.error('[contact] email notification failed',{eventId}); }
+  return NextResponse.json({ok:true,emailNotification});
  }catch{return NextResponse.json({error:'Não foi possível entregar a mensagem'},{status:502});}
 }

@@ -1,0 +1,32 @@
+const fs = require('fs'), ts = require('typescript'), assert = require('node:assert/strict');
+let calls = [], options, fail = false, reject = false, closed = 0;
+const code = ts.transpileModule(fs.readFileSync('src/lib/contact-email.ts', 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText;
+const mod = { exports: {} };
+new Function('exports', 'require', code)(mod.exports, () => ({ createTransport(config) {
+  options = config;
+  return { async sendMail(mail) { calls.push(mail); await new Promise(resolve => setImmediate(resolve)); if (fail) throw Error('SMTP failure'); return reject ? { accepted: [], rejected: ['team@example.com'] } : { accepted: ['team@example.com'], rejected: [] }; }, close() { closed++; } };
+} }));
+const { notifyContact } = mod.exports;
+const lead = { name: 'Synthetic visitor', email: 'visitor@example.com', message: '<img src=x onerror=alert(1)>', goal: 'automatizar', formKind: 'proposal', company: 'Example', phone: '', companyWebsite: '', budget: '1000-3500', source: '/contacto' };
+const id = n => `11111111-1111-4111-8111-${String(n).padStart(12, '0')}`;
+(async () => {
+  delete process.env.CONTACT_EMAIL_ENABLED;
+  assert.equal(await notifyContact(lead, id(1)), 'disabled'); assert.equal(calls.length, 0);
+  process.env.CONTACT_EMAIL_ENABLED = 'true';
+  delete process.env.CONTACT_SMTP_PASSWORD;
+  await assert.rejects(notifyContact(lead, id(1))); assert.equal(calls.length, 0);
+  process.env.CONTACT_SMTP_USER = 'sender@example.com'; process.env.CONTACT_NOTIFICATION_TO = 'team@example.com'; process.env.CONTACT_SMTP_PASSWORD = 'synthetic-not-real';
+  await Promise.all([notifyContact(lead, id(1)), notifyContact(lead, id(1))]);
+  assert.equal(calls.length, 1); assert.equal(closed, 1);
+  await notifyContact(lead, id(1)); assert.equal(calls.length, 1);
+  assert.equal(options.host, 'smtp.titan.email'); assert.equal(options.port, 465); assert.equal(options.secure, true);
+  assert.equal(calls[0].to, 'team@example.com'); assert.equal(calls[0].replyTo.address, lead.email); assert.equal(calls[0].from.address, 'sender@example.com');
+  assert.equal(calls[0].html, undefined); assert.ok(calls[0].text.includes(lead.message)); assert.equal(calls[0].disableUrlAccess, true); assert.equal(calls[0].disableFileAccess, true);
+  process.env.CONTACT_NOTIFICATION_TO = 'team@example.com\r\nBcc: other@example.com'; await assert.rejects(notifyContact(lead, id(2))); assert.equal(calls.length, 1);
+  process.env.CONTACT_NOTIFICATION_TO = 'team@example.com';
+  fail = true; await assert.rejects(notifyContact(lead, id(2))); fail = false;
+  await notifyContact(lead, id(2)); assert.equal(calls.length, 3);
+  reject = true; await assert.rejects(notifyContact(lead, id(3))); reject = false;
+  await notifyContact(lead, id(3)); assert.equal(calls.length, 5); assert.equal(closed, 5);
+  console.log('PASS: SMTP opt-in, configuration, TLS, fixed recipient, reply-to, plain text, concurrent deduplication, failure and retry.');
+})().catch(error => { console.error(error); process.exitCode = 1; });
