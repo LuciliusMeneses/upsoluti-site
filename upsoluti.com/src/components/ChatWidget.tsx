@@ -17,7 +17,7 @@ async function chatRequest(body?: Record<string, unknown>, method = body ? 'POST
   const controller = new AbortController();
   const timeout = window.setTimeout(() => controller.abort(), 75000);
   try {
-    const response = await fetch('/api/chat', { method, credentials: 'same-origin', cache: 'no-store', headers: body ? { 'Content-Type': 'application/json' } : undefined, body: body ? JSON.stringify(body) : undefined, signal: controller.signal });
+    const response = await fetch(method === 'GET' ? '/api/chat?fresh=1' : '/api/chat', { method, credentials: 'same-origin', cache: 'no-store', headers: body ? { 'Content-Type': 'application/json' } : undefined, body: body ? JSON.stringify(body) : undefined, signal: controller.signal });
     const data = await response.json();
     if (!response.ok) throw new Error(typeof data.error === 'string' ? data.error : 'Não foi possível concluir o pedido. Tente novamente.');
     return data as { config?: ChatConfig; conversation?: ChatConversation | null; reply?: ChatReply; leadStatus?: 'pending' | 'synced'; leadCaptureError?: string };
@@ -109,7 +109,7 @@ export default function ChatWidget({ embedded = false }: { embedded?: boolean })
     if (inFlight.current) return;
     inFlight.current = true; setBusy(true); setError('');
     try {
-      const data = await chatRequest({ action: 'start', consent: true, remember });
+      const data = await chatRequest({ action: 'start', consent: true, remember, fresh: true });
       setConversation(data.conversation || null); setConfig(data.config || defaults); setTab(nextTab);
       if (nextTab === 'chat' && input.trim().length >= 2 && data.conversation && data.config?.aiAvailable) {
         inFlight.current = false;

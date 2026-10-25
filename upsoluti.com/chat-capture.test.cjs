@@ -41,6 +41,14 @@ async function post(token, body) {
   try {
     const cleaned = provider.parseProviderReply(JSON.stringify({ answer: 'Obrigado. Pode rever e confirmar o pedido no botão Falar com a equipa.' }), []);
     assert.equal(cleaned.answer, 'Obrigado.');
+    const previous = store.createConversation();
+    store.saveUserMessage(previous.conversation.id, randomUUID(), 'Synthetic previous conversation');
+    const freshView = await route.GET(new NextRequest('https://site.example/api/chat?fresh=1', {headers:{cookie:'upsoluti_chat='+previous.token}}));
+    assert.equal((await freshView.json()).conversation, null, 'fresh view must not expose previous messages');
+    const started = await post(previous.token, {action:'start',consent:true,fresh:true,remember:false});
+    assert.notEqual(started.conversation.id, previous.conversation.id, 'start must create a distinct conversation');
+    assert.equal(started.conversation.messages.length, 0);
+    assert.equal(store.getConversation(previous.token).messages.length, 1, 'old records must not be deleted');
     const a = store.createConversation();
     await post(a.token, { action: 'send', requestId: randomUUID(), message: 'Sou Teste Visual e quero automatizar vendas.', leadConsent: true });
     assert.equal(deliveries.length, 0, 'missing email must not create a lead');

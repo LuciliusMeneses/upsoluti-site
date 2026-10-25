@@ -25,7 +25,7 @@ function config(): ChatConfig {
 
 export async function GET(req: NextRequest) {
   if (req.headers.get('sec-fetch-site') === 'cross-site') return chatJson({ error: 'Pedido não permitido.' }, 403);
-  try { return chatJson({ config: config(), conversation: await getConversation(req.cookies.get(CHAT_COOKIE)?.value) }); }
+  try { return chatJson({ config: config(), conversation: req.nextUrl.searchParams.get('fresh') === '1' ? null : await getConversation(req.cookies.get(CHAT_COOKIE)?.value) }); }
   catch { return chatJson({ error: 'Não foi possível carregar o atendimento.' }, 503); }
 }
 
@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
   try {
     if (body.action === 'start') {
       if (body.consent !== true) return chatJson({ error: 'Confirme o início da conversa.' }, 400);
-      const existing = await getConversation(req.cookies.get(CHAT_COOKIE)?.value);
+      const existing = body.fresh === true ? null : await getConversation(req.cookies.get(CHAT_COOKIE)?.value);
       if (existing) return chatJson({ conversation: existing, config: config() });
       if (!(await consumeRateLimit('start:' + ip, 12, 3600000))) return chatJson({ error: 'Aguarde antes de iniciar outro atendimento.' }, 429);
       const created = await createConversation();
