@@ -1,5 +1,6 @@
 import { createTransport } from 'nodemailer';
 import type { Lead } from './contact';
+import { budgets } from './lead-options';
 
 // This cache reduces retry duplicates within one instance. SMTP does not provide
 // durable idempotency; Message-ID alone cannot guarantee deduplication.
@@ -41,7 +42,7 @@ export async function notifyContact(lead: Lead, eventId: string): Promise<'sent'
           `Telefone: ${lead.phone || 'Não informado'}`,
           `Empresa: ${lead.company || 'Não informada'}`,
           `Website: ${lead.companyWebsite || 'Não informado'}`,
-          `Objetivo: ${lead.goal}`, `Orçamento: ${lead.budget || 'Não informado'}`,
+          `Objetivo: ${lead.goal}`, `Orçamento (EUR): ${budgets.find(([key]) => key === lead.budget)?.[1] || 'Não informado'}`,
           '', 'Mensagem:', lead.message, '',
           `Origem: ${lead.source || 'Website'}`, `Referência: ${eventId}`,
         ].join('\n'),

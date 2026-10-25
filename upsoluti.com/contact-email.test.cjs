@@ -2,7 +2,7 @@ const fs = require('fs'), ts = require('typescript'), assert = require('node:ass
 let calls = [], options, fail = false, reject = false, closed = 0;
 const code = ts.transpileModule(fs.readFileSync('src/lib/contact-email.ts', 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText;
 const mod = { exports: {} };
-new Function('exports', 'require', code)(mod.exports, () => ({ createTransport(config) {
+new Function('exports', 'require', code)(mod.exports, id => id === './lead-options' ? { budgets: [] } : ({ createTransport(config) {
   options = config;
   return { async sendMail(mail) { calls.push(mail); await new Promise(resolve => setImmediate(resolve)); if (fail) throw Error('SMTP failure'); return reject ? { accepted: [], rejected: ['team@example.com'] } : { accepted: ['team@example.com'], rejected: [] }; }, close() { closed++; } };
 } }));
