@@ -46,7 +46,6 @@
 .hero-demo-scrollbar { position: absolute; top: 6px; bottom: 6px; right: 4px; width: 5px; border-radius: 8px; background: #e6c8ff24; pointer-events: none; }
 .hero-demo-scrollbar span { position: absolute; top: 0; width: 100%; height: 20%; border-radius: inherit; background: #ddb5f5; box-shadow: 0 0 5px #c58ce540; }
 .hero-demo-monitor .hero-demo-caption { align-items: center; margin: 0 0 0 4px; min-height: 44px; }
-.hero-demo-motion { display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 8px; background: transparent; color: #eedaff; cursor: pointer; }
 @media (max-width: 767px) {
   .hero-banner-content { padding-inline: 54px; padding-block: 24px; }
   .hero-banner-content h2 { width: 100%; font-size: clamp(27px, 7.2vw, 40px); }
@@ -59,7 +58,6 @@
   .hero-demo-glass { right: 4%; width: 85%; height: 350px; opacity: .2; transform: translateY(-50%) rotate(-8deg); }
   .hero-demo-screen { height: 270px; }
   .hero-demo-monitor { pointer-events: none; }
-  .hero-demo-monitor .hero-demo-motion { pointer-events: auto; }
 }
 .ai-home .growth-hero.consultor-hero { padding-top: 0; }
 
