@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ArrowUpRight, Bot, Check, Download, LoaderCircle, Mail, MessageCircle, Send, Sparkles, X } from 'lucide-react';
@@ -39,6 +40,7 @@ export default function ChatWidget({ embedded = false }: { embedded?: boolean })
   const [remember,setRemember]=useState(false);
   const [open, setOpen] = useState(embedded);
   const [mobile, setMobile] = useState(false);
+  const [minimized, setMinimized] = useState(false);
   const [initialized, setInitialized] = useState(false);
   const [booting, setBooting] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -57,9 +59,10 @@ export default function ChatWidget({ embedded = false }: { embedded?: boolean })
   const scroll = useRef<HTMLDivElement>(null);
   const stickToBottom = useRef(true);
   const inFlight = useRef(false);
+  const fullscreen = open && mobile && (!embedded || (!!conversation && !minimized));
 
   useEffect(() => {
-    const media = window.matchMedia('(max-width: 639px)');
+    const media = window.matchMedia('(max-width: 767px)');
     const change = () => setMobile(media.matches);
     change(); media.addEventListener('change', change);
     return () => media.removeEventListener('change', change);
@@ -81,12 +84,12 @@ export default function ChatWidget({ embedded = false }: { embedded?: boolean })
   }, [open, initialized]);
 
   useEffect(() => {
-    if (!open || embedded) return;
+    if (!open || (embedded && !fullscreen)) return;
     const previous = document.body.style.overflow;
     if (mobile) document.body.style.overflow = 'hidden';
     const focus = window.requestAnimationFrame(() => panel.current?.querySelector<HTMLButtonElement>('.chat-close')?.focus());
     function keydown(event: KeyboardEvent) {
-      if (event.key === 'Escape') { setOpen(false); launcher.current?.focus(); }
+      if (event.key === 'Escape') { if (embedded) setMinimized(true); else setOpen(false); window.requestAnimationFrame(() => launcher.current?.focus()); }
       if (event.key !== 'Tab' || !mobile || !panel.current) return;
       const items = Array.from(panel.current.querySelectorAll<HTMLElement>('button:not(:disabled), a[href], input:not(:disabled):not([tabindex="-1"]), select:not(:disabled), textarea:not(:disabled)')).filter(element => element.getClientRects().length > 0);
       const first = items[0]; const last = items.at(-1);
@@ -95,7 +98,19 @@ export default function ChatWidget({ embedded = false }: { embedded?: boolean })
     }
     document.addEventListener('keydown', keydown);
     return () => { window.cancelAnimationFrame(focus); document.removeEventListener('keydown', keydown); if (mobile) document.body.style.overflow = previous; };
-  }, [open, mobile, embedded]);
+  }, [open, mobile, embedded, fullscreen]);
+
+  useEffect(() => {
+    if (!fullscreen) return;
+    const viewport = window.visualViewport;
+    const element = panel.current;
+    const update = () => {
+      element?.style.setProperty('--chat-viewport-height', `${viewport?.height || window.innerHeight}px`);
+      element?.style.setProperty('--chat-viewport-top', `${viewport?.offsetTop || 0}px`);
+    };
+    update(); viewport?.addEventListener('resize', update); viewport?.addEventListener('scroll', update); window.addEventListener('resize', update);
+    return () => { viewport?.removeEventListener('resize', update); viewport?.removeEventListener('scroll', update); window.removeEventListener('resize', update); element?.style.removeProperty('--chat-viewport-height'); element?.style.removeProperty('--chat-viewport-top'); };
+  }, [fullscreen]);
 
   useEffect(() => {
     const profile: ChatProfile = conversation?.profile || {};
@@ -104,13 +119,13 @@ export default function ChatWidget({ embedded = false }: { embedded?: boolean })
 
   useEffect(() => { if (scroll.current && stickToBottom.current) scroll.current.scrollTop = scroll.current.scrollHeight; }, [conversation, optimistic, busy, tab, open]);
 
-  function close() { if (!embedded) { setOpen(false); launcher.current?.focus(); } }
+  function close() { if (embedded) { setMinimized(true); window.requestAnimationFrame(() => launcher.current?.focus()); } else { setOpen(false); launcher.current?.focus(); } }
   async function start(nextTab: 'chat' | 'contact') {
     if (inFlight.current) return;
     inFlight.current = true; setBusy(true); setError('');
     try {
       const data = await chatRequest({ action: 'start', consent: true, remember, fresh: true });
-      setConversation(data.conversation || null); setConfig(data.config || defaults); setTab(nextTab);
+      setConversation(data.conversation || null); setMinimized(false); setConfig(data.config || defaults); setTab(nextTab);
       if (nextTab === 'chat' && input.trim().length >= 2 && data.conversation && data.config?.aiAvailable) {
         inFlight.current = false;
         await send(input, undefined, data.conversation);
@@ -172,9 +187,10 @@ export default function ChatWidget({ embedded = false }: { embedded?: boolean })
 
   const captureNotice = !conversation?.leadStatus && <p className="chat-privacy-note">Ao enviar os seus dados de contacto nesta conversa, estes serão registados automaticamente com o contexto para a equipa dar seguimento ao atendimento. <Link href="/privacidade">Privacidade</Link>.</p>;
 
-  return <div className={"public-chat" + (embedded ? " chat-embedded" : "")}>
-    {open && <section ref={panel} id="upsoluti-chat" role={embedded ? "region" : "dialog"} aria-modal={!embedded && mobile ? true : undefined} aria-label="Atendimento UPsoluti" className="chat-panel">
-      <header className="chat-header"><div className="chat-brand-icon"><Sparkles size={22} aria-hidden="true" /></div><div className="chat-heading"><h2>Ana · UPsoluti</h2><p>{embedded ? 'Assistente virtual com IA' : config.aiAvailable ? 'Atendente virtual · Como podemos ajudar?' : 'Atendimento · Vamos conversar?'}</p></div>{!embedded && <button className="chat-close chat-icon-button" onClick={close} aria-label="Fechar atendimento"><X size={20} aria-hidden="true" /></button>}</header>
+  const content = <div className={"public-chat" + (embedded ? " chat-embedded" : "") + (fullscreen ? " chat-mobile-fullscreen" : "")}>
+    {embedded && mobile && conversation && minimized && <button ref={launcher} type="button" className="chat-primary chat-expand" onClick={() => setMinimized(false)}>Abrir conversa em ecrã inteiro<ArrowUpRight size={17} aria-hidden="true" /></button>}
+    {open && <section ref={panel} id="upsoluti-chat" role={!embedded || fullscreen ? "dialog" : "region"} aria-modal={fullscreen ? true : undefined} aria-label="Atendimento UPsoluti" className="chat-panel">
+      <header className="chat-header"><div className="chat-brand-icon"><Sparkles size={22} aria-hidden="true" /></div><div className="chat-heading"><h2>Ana · UPsoluti</h2><p>{embedded ? 'Assistente virtual com IA' : config.aiAvailable ? 'Atendente virtual · Como podemos ajudar?' : 'Atendimento · Vamos conversar?'}</p></div>{(!embedded || fullscreen) && <button className="chat-close chat-icon-button" onClick={close} aria-label={embedded ? "Minimizar conversa" : "Fechar atendimento"}><X size={20} aria-hidden="true" /></button>}</header>
       {conversation && <div className="chat-toolbar"><div className="chat-tabs" role="tablist" aria-label="Opções de atendimento" onKeyDown={event => { if (!(event.target instanceof HTMLElement) || event.target.getAttribute("role") !== "tab" || !["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return; event.preventDefault(); const next = event.key === "Home" ? "chat" : event.key === "End" ? "contact" : tab === "chat" ? "contact" : "chat"; setTab(next); setError(''); document.getElementById(next === "chat" ? "chat-tab-conversation" : "chat-tab-contact")?.focus(); }}><button id="chat-tab-conversation" role="tab" aria-controls="chat-conversation" aria-selected={tab === 'chat'} tabIndex={tab === 'chat' ? 0 : -1} onClick={() => { setTab('chat'); setError(''); }}>Conversa</button><button id="chat-tab-contact" role="tab" aria-controls="chat-contact" aria-selected={tab === 'contact'} tabIndex={tab === 'contact' ? 0 : -1} onClick={() => { setTab('contact'); setError(''); }}>Falar com a equipa</button><div className="chat-history-actions"><button className="chat-icon-button" disabled={busy || !messages.length} onClick={download} aria-label="Baixar conversa"><Download size={15} aria-hidden="true" /></button></div></div>
       <div className="chat-memory-controls"><label><input type="checkbox" checked={conversation.profile.memoryEnabled===true} disabled={busy} onChange={e=>memoryPreference(e.target.checked)}/><span>Usar contexto em novas conversas neste navegador</span></label><button type="button" disabled={busy} onClick={newConversation}>Nova conversa</button>{!!conversation.profile.memoryNotes?.length&&conversation.profile.memoryEnabled&&<p>Contexto anterior retomado. Pode desativar a memória.</p>}</div></div>}
       {conversation && <div className="chat-capture-status">{captureNotice}{conversation.leadStatus && <p role="status">{conversation.leadStatus === 'synced' ? 'Dados e contexto enviados à equipa.' : 'Pedido guardado. O envio à equipa ainda está pendente.'}</p>}{conversation.leadStatus === 'pending' && <button type="button" className="chat-text-button" disabled={busy} onClick={retryLead}>Reenviar dados e contexto</button>}</div>}
@@ -185,4 +201,5 @@ export default function ChatWidget({ embedded = false }: { embedded?: boolean })
     </section>}
     {!embedded && <button ref={launcher} className={'chat-launcher' + (open ? ' is-open' : '')} aria-label={open ? 'Fechar atendimento' : 'Abrir atendimento UPsoluti'} aria-expanded={open} aria-controls="upsoluti-chat" onClick={() => setOpen(value => !value)}>{open ? <X size={22} aria-hidden="true" /> : <MessageCircle size={22} aria-hidden="true" />}<span>{open ? 'Fechar' : 'Vamos conversar?'}</span></button>}
   </div>;
+  return embedded && fullscreen ? createPortal(content, document.body) : content;
 }

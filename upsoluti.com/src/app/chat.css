@@ -57,3 +57,14 @@
   .chat-toolbar .chat-memory-controls label { font-size: 9px; line-height: 1.5; }
   .chat-toolbar .chat-memory-controls button { max-width: 54px; padding: 5px; font-size: 10px; line-height: 1.4; }
 }
+
+/* Active mobile conversations escape the hero stacking context through a portal. */
+.public-chat.chat-mobile-fullscreen { position: fixed; inset: 0; width: 100%; max-width: none; margin: 0; z-index: 4000; }
+.public-chat.chat-mobile-fullscreen .chat-panel { position: fixed; inset: var(--chat-viewport-top, 0px) 0 auto; width: 100%; height: var(--chat-viewport-height, 100dvh); max-height: var(--chat-viewport-height, 100dvh); min-height: 0; margin: 0; border: 0; border-radius: 0; padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom); animation: none; box-shadow: none; }
+.chat-mobile-fullscreen .chat-conversation-panel { min-height: 0; overflow: hidden; }
+.chat-mobile-fullscreen .chat-toolbar, .chat-mobile-fullscreen .chat-capture-status { flex-shrink: 0; }
+.chat-mobile-fullscreen .chat-capture-status { max-height: 22dvh; overflow-y: auto; }
+.chat-mobile-fullscreen .chat-memory-controls { gap: 6px; padding-block: 6px; }
+.chat-mobile-fullscreen .chat-messages { min-height: 0; overscroll-behavior: contain; }
+.chat-embedded .chat-expand { margin-bottom: 12px; }
+
