@@ -1,4 +1,7 @@
 /* Public support widget; isolated from the page and hero styles. */
+.chat-team-toggle { display: inline-flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 44px; padding: 10px 16px; border: 1px solid #c28ae83d; border-radius: 9px; background: #b679dc12; color: #e0baf5; font-size: 12px; cursor: pointer; }
+.chat-team-toggle[aria-expanded="true"] { background: #b679dc26; }
+.chat-toolbar > .chat-team-toggle { margin: 8px 14px; }
 .public-chat { position: relative; z-index: 1500; color: #f8f4fc; font-family: var(--font-sans); }
 .chat-launcher { position: fixed; right: 24px; bottom: max(24px,env(safe-area-inset-bottom)); z-index: 1501; display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 54px; padding: 14px 21px; border: 1px solid #d798f14d; border-radius: 999px; color: #fff; background: linear-gradient(125deg,#a326d7,#7926b0); box-shadow: 0 10px 38px #0b081c66,0 0 25px #a326d722; font-size: 13px; font-weight: 650; transition: background .2s,box-shadow .2s; }
 .chat-launcher:hover { background: #8b1db8; box-shadow: 0 12px 40px #a326d744; }.public-chat button:focus-visible, .public-chat a:focus-visible, .public-chat input:focus-visible, .public-chat select:focus-visible, .public-chat textarea:focus-visible { outline: 2px solid #dfaff8; outline-offset: 3px; }.public-chat button:disabled { cursor: not-allowed; opacity: .55; }
