@@ -1,3 +1,40 @@
+/* Full-width hero banner; artwork is decorative and stays above the chat. */
+.ai-home .hero-banner {
+  position: relative;
+  width: 100%;
+  height: 460px;
+  margin: 0 0 36px;
+  background: #2B183A;
+}
+.hero-banner-slide { position: absolute; inset: 0; background-position: center; background-size: cover; background-repeat: no-repeat; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 650ms ease-in-out, visibility 650ms; }
+.hero-banner-slide.is-active { opacity: 1; visibility: visible; pointer-events: auto; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-banner-slide { transition: none; }
+}
+.hero-banner-arrow { position: absolute; top: 50%; transform: translateY(-50%); display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #ffffff50; border-radius: 50%; background: #101019cc; color: #fff; cursor: pointer; }
+.hero-banner-prev { left: 16px; }
+.hero-banner-next { right: 16px; }
+.hero-banner button:focus-visible { outline: 3px solid #d49cf4; outline-offset: 3px; }
+.hero-banner-commercial { background-size: cover; background-position: center; }
+.hero-banner-content { height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-block: 30px; text-align: left; }
+.hero-banner-kicker { margin: 0 0 16px; color: #d49cf4; font-size: 11px; font-weight: 700; letter-spacing: .16em; }
+.hero-banner-content h2 { margin: 0; width: 50%; font-size: clamp(32px, 4vw, 58px); font-weight: 600; line-height: 1.12; letter-spacing: -.035em; color: #fff; }
+.hero-banner-content h2 span { color: #d49cf4; }
+.hero-banner-description { width: 50%; margin: 20px 0 24px; font-size: 17px; line-height: 1.7; color: #e1d7e8; }
+.hero-banner-cta { display: inline-flex; align-items: center; gap: 18px; min-height: 46px; padding: 12px 22px; border-radius: 10px; background: #a522d9; color: #fff; font-size: 14px; font-weight: 600; text-decoration: none; }
+.hero-banner-cta:hover { background: #891ab8; }
+.hero-banner-playback { position: absolute; right: 16px; bottom: 12px; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #ffffff50; border-radius: 50%; background: #101019cc; color: #fff; cursor: pointer; }
+.hero-banner-cta:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+@media (max-width: 767px) {
+  .hero-banner-content { padding-inline: 54px; padding-block: 24px; }
+  .hero-banner-content h2 { width: 100%; font-size: clamp(27px, 7.2vw, 40px); }
+  .hero-banner-description { width: 100%; margin: 16px 0 20px; font-size: 14px; line-height: 1.6; }
+  .hero-banner-kicker { font-size: 9px; margin-bottom: 14px; }
+  .hero-banner-prev { left: 6px; }
+  .hero-banner-next { right: 6px; }
+}
+.ai-home .growth-hero.consultor-hero { padding-top: 0; }
+
 /* Home-only visual layer: short copy, connected surfaces and abstract AI graphics. */
 .ai-home {
   --ai-bg: #101019;
@@ -216,7 +253,7 @@ html:has(.ai-home) { scrollbar-color: #604774 #101019; }
 html:has(.ai-home)::-webkit-scrollbar-track, .chat-embedded ::-webkit-scrollbar-track { background: #101019; }
 html:has(.ai-home)::-webkit-scrollbar-thumb, .chat-embedded ::-webkit-scrollbar-thumb { background: #604774; border-radius: 8px; }
 /* Hero chat: one prompt and one primary action; examples/settings on demand. */
-.chat-embedded { max-width: 860px; }
+.chat-embedded { max-width: 100%; }
 .chat-embedded .chat-panel { border: 1px solid #ffffff1f; background: #17141f; box-shadow: 0 16px 48px #0002; }
 .chat-embedded .chat-panel:focus-within { border-color: #b881d580; box-shadow: 0 16px 48px #0002; }
 .chat-embedded .chat-header { padding: 18px 24px; background: transparent; border-bottom-color: #ffffff0d; }
