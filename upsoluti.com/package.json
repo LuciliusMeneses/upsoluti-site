@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint src",
     "typecheck": "tsc --noEmit --incremental false",
-    "test": "node contact.test.cjs && node chat.test.cjs && node chat-memory.test.cjs && node chat-capture.test.cjs && node contact-email.test.cjs",
+    "test": "node contact.test.cjs && node chat.test.cjs && node chat-memory.test.cjs && node chat-capture.test.cjs && node contact-email.test.cjs && node chat-latency.test.cjs && node chat-provider-stream.test.cjs",
     "check": "npm run lint && npm run typecheck && npm test && npm run build"
   },
   "dependencies": {

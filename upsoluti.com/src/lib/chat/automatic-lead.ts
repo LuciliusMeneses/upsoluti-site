@@ -6,8 +6,7 @@ import { deliverChatLead } from './handoff';
 /** Uses the existing confirmed-lead envelope and one lead per conversation. */
 export async function captureConversationLead(session: ChatConversation, authorized: boolean, source: unknown) {
   if (!authorized) return;
-  const existing = await getStoredLead(session.id);
-  if (existing) return deliverChatLead(existing);
+  if (session.leadStatus === 'synced') return 'synced' as const;
   const lead = parseLead({
     name: session.profile.name || '',
     email: session.profile.email || '',
@@ -18,6 +17,9 @@ export async function captureConversationLead(session: ChatConversation, authori
     formKind: 'contact',
     source: typeof source === 'string' && source.startsWith('/') && !source.startsWith('//') ? source.slice(0, 300) : '/',
   });
+  if (!lead && !session.leadStatus) return;
+  const existing = await getStoredLead(session.id);
+  if (existing) return deliverChatLead(existing);
   if (!lead) return;
   const stored = await saveLead(session.id, {
     lead,
