@@ -8,9 +8,9 @@ export default function ContactForm() {
       <div className="growth-contact-glow" aria-hidden="true" />
       <div className="container-main growth-contact-grid">
         <div className="growth-contact-intro">
-          <p className="growth-eyebrow"><Sparkles size={14} aria-hidden="true" />O próximo passo é seu</p>
-          <h2 id="proposal-title">Vamos <span>trabalhar juntos?</span></h2>
-          <p className="ai-contact-description">Uma ideia, um desafio ou uma oportunidade.<br />Vamos encontrar o melhor caminho.</p>
+          <p className="growth-eyebrow"><Sparkles size={14} aria-hidden="true" />Comecemos pelo seu desafio</p>
+          <h2 id="proposal-title">Vamos definir <span>o próximo passo?</span></h2>
+          <p className="ai-contact-description">Conte o que pretende melhorar e como trabalha hoje. A equipa analisa o contexto para conversar consigo sobre as possibilidades.</p>
           <a className="growth-contact-email" href="mailto:contacto@upsoluti.com"><Mail size={18} aria-hidden="true" />contacto@upsoluti.com</a>
           <Link className="ai-contact-detail-link" href="/contacto">Prefere detalhar o projeto? <ArrowUpRight size={16} aria-hidden="true" /></Link>
         </div>
