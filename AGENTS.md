@@ -103,3 +103,7 @@ When running a squad:
 - When switching personas (inline execution), clearly indicate which agent is speaking
 - When using subagents, inform the user that background work is happening
 - After each pipeline run, update the squad's memories.md with key learnings
+
+## Repositório próprio obrigatório por sistema
+
+Regra permanente solicitada pelo usuário em 2026-11-05: todo sistema ou projeto novo deve ser armazenado em seu próprio repositório Git. Não versionar um sistema como subpasta do repositório de outro sistema. Antes de iniciar o desenvolvimento, verificar a raiz Git e preparar um repositório independente para o projeto; antes de commit/push, confirmar o remoto e o escopo dos arquivos. Pastas de sistemas com Git próprio devem ficar ignoradas no repositório do workspace, sem inclusão como submódulo ou cópia duplicada por padrão. Preservar históricos e arquivos locais nas migrações; nunca incluir credenciais, envs preenchidos, dependências ou dados privados. Esta regra não concede autorização permanente para deploy ou mudanças destrutivas.

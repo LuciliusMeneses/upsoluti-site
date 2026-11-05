@@ -1,9 +1,0 @@
-# Item 2 — plano de entrega
-
-**Atualização de direção:** ler `../SAAS-PRODUCT-DIRECTIVE.md`. A retomada priorizou a base comercial; item 2 permanece no backlog. O antigo `004_operations.sql` foi preservado em `drafts/operations.sql`, fora da sequência de migrations; ainda não foi revisado, testado ou aplicado. A implementação operacional deve integrar os direitos de plano no servidor já definidos pela fundação comercial.
-
-2026-11-04. Escopo autorizado: serviços (preço/duração/preparação), profissionais e disponibilidade, clientes e marcações persistentes (criar/reagendar/cancelar com conflitos concorrentes). Preservar PT-BR/PT-PT, referências visuais, isolamento e perfil sem e-mails. Desenvolvimento local e atualização do projeto Vercel de testes após aceite técnico; não implementar pacotes/financeiro/envio público.
-
-Modelo: tabelas operacionais por estabelecimento, relações compostas por tenant, RLS e escritas por funções SQL autorizadas. Horários semanais da unidade e do profissional, qualificações de serviços, bloqueios, snapshots de preço/duração, eventos e versão de marcação. Motor único de disponibilidade no PostgreSQL retorna instantes UTC já validados no fuso empresarial. Mutações de agenda serializadas por estabelecimento na primeira versão; validação e idempotência no banco, sem depender de botões/checagem prévia do navegador.
-
-Critérios: criar catálogo/equipe/cliente/horários e marcação pela UI; recarregar preserva tudo; reagendar/cancelar com histórico e motivo; não aceitar dois pedidos concorrentes conflitantes; respeitar preparação, horário da unidade/profissional, bloqueios, fuso e fronteira entre empresas. Papel profissional somente agenda própria, receção pode clientes/agenda, gestor/proprietário configuram catálogo/equipe/horários. Testar regras com PostgreSQL local e real, além de fluxo navegador em telas pequenas antes do deploy.
