@@ -1,0 +1,481 @@
+Atue como uma equipa sénior de Engenharia de Software, Produto e UI/UX. Desenvolva uma plataforma SaaS comercial de gestão para centros de estética e depilação, preparada para futura expansão a salões e outros negócios de beleza.
+
+O objetivo é criar um produto próprio para venda por assinatura, com gestão de estabelecimentos, agenda, clientes, pacotes de sessões, financeiro, comissões e relacionamento comercial.
+
+Utilize este briefing como fonte principal de requisitos e execute a implementação por etapas verificáveis.
+
+## 1. Direção do produto e referências
+
+Referências conceituais:
+
+- Place: https://place.afcode.com.br/ — organização operacional, painel diário, agenda por profissional, fichas e acompanhamento.
+- Trinks — referência de gestão integrada para negócios de beleza e presença digital para marcações.
+
+Estas referências não foram integralmente auditadas. Não presuma funcionalidades, integrações ou regras que não estejam descritas neste briefing.
+
+Desenvolva implementação e identidade próprias.
+
+**Se já existir um layout aprovado no projeto ou fornecido em anexo, implemente-o fielmente.** Preserve cores, tipografia, componentes, hierarquia, espaçamento e navegação. Adapte apenas o necessário para funcionalidade, acessibilidade e responsividade. Evite substituir o design por um template genérico.
+
+Use um nome provisório configurável até a marca ser definida.
+
+## 2. Público e proposta de valor
+
+Público inicial: centros de estética e depilação com aproximadamente 2 a 10 profissionais, sobretudo estabelecimentos que vendem pacotes de sessões.
+
+Proposta de valor:
+
+“Organizar a agenda, controlar sessões e pagamentos e acompanhar os clientes que precisam de regressar.”
+
+Os percursos centrais são:
+
+1. Cadastrar cliente e realizar uma marcação.
+2. Vender um pacote e acompanhar as sessões disponíveis.
+3. Confirmar chegada, iniciar e concluir atendimento.
+4. Registar pagamento e calcular comissão.
+5. Identificar necessidade de retorno ou renovação.
+
+Prepare uma base extensível, mantendo a primeira versão concentrada nestes percursos.
+
+## 3. Inspeção inicial e decisões
+
+Antes de alterar código:
+
+- Inspecione o repositório, a aplicação, as dependências e a estrutura de dados existentes.
+- Identifique componentes reutilizáveis, funcionalidades concluídas e lacunas.
+- Preserve integrações funcionais e dados existentes.
+- Leia as instruções do projeto.
+- Registe um plano curto de implementação e os critérios de conclusão.
+
+Se o projeto estiver vazio, inicialize uma estrutura organizada. Se já existir, evolua a arquitetura com o mínimo de mudanças necessárias.
+
+País de lançamento, moeda, fuso horário e marca ainda não foram definidos. Torne-os configuráveis por estabelecimento. Utilize um perfil regional coerente nos dados de demonstração e documente a escolha.
+
+Não bloqueie tarefas independentes por decisões que possam ser configuradas posteriormente.
+
+## 4. Arquitetura proposta
+
+Na ausência de uma arquitetura existente adequada, utilize:
+
+- React e TypeScript no frontend.
+- Vite para desenvolvimento e build.
+- Tailwind CSS e componentes acessíveis.
+- TanStack Query para dados remotos.
+- React Hook Form e Zod para formulários e validação.
+- Supabase Auth para autenticação.
+- PostgreSQL para dados.
+- Supabase Storage com ficheiros privados.
+- Funções no servidor para operações privilegiadas e integrações.
+- Migrações SQL versionadas.
+
+Concentre regras críticas no servidor ou no banco de dados. A interface deve consumir essas regras de forma consistente.
+
+Separe:
+
+- Componentes e apresentação.
+- Regras de domínio.
+- Acesso a dados.
+- Integrações externas.
+- Configuração regional.
+- Testes.
+
+Não coloque credenciais privilegiadas no frontend.
+
+## 5. SaaS com múltiplos estabelecimentos
+
+Implemente uma aplicação que possa atender empresas independentes.
+
+Estrutura:
+
+- Estabelecimento: conta empresarial contratante e limite de isolamento dos dados.
+- Unidade: localização pertencente ao estabelecimento.
+- Utilizador: pessoa autenticada.
+- Vínculo: associação do utilizador ao estabelecimento, com função e permissões.
+- Profissional: pessoa que presta serviços, com ou sem acesso ao sistema.
+
+Um utilizador pode pertencer a mais de um estabelecimento, mediante vínculos explícitos.
+
+Implemente isolamento de dados por estabelecimento em tabelas, consultas, funções, ficheiros, pesquisa, relatórios e processos automáticos.
+
+Não confie num identificador enviado pelo navegador como prova de autorização. Valide a associação e a permissão em cada operação.
+
+Perfis iniciais:
+
+- Proprietário: administração do estabelecimento.
+- Gestor: operação e relatórios autorizados.
+- Receção: agenda, cadastro e cobrança conforme permissão.
+- Profissional: agenda e atendimentos autorizados.
+
+Crie uma matriz explícita de permissões. Ocultar botões não substitui controlo de acesso no servidor.
+
+A administração da plataforma deve ficar separada das contas dos clientes. Qualquer acesso de suporte a dados do estabelecimento deve ser controlado e auditável.
+
+## 6. Interface e navegação
+
+Implemente o layout aprovado com:
+
+- Barra lateral recolhível.
+- Cabeçalho contextual.
+- Pesquisa global autorizada.
+- Seletor de unidade quando aplicável.
+- Notificações.
+- Ação principal por página.
+- Responsividade para computador, tablet e telemóvel.
+
+Navegação:
+
+- Visão geral.
+- Agenda.
+- Clientes.
+- Pacotes e sessões.
+- Financeiro.
+- Equipa.
+- Serviços.
+- Relatórios.
+- Configurações.
+
+Formulários devem ter validação clara, feedback de gravação e proteção contra perda de alterações.
+
+Inclua estados de carregamento, ausência de dados, erro, acesso restrito e pesquisa sem resultados. Nenhuma ação essencial deve ser um botão decorativo.
+
+## 7. Autenticação e onboarding
+
+Implemente:
+
+- Login e recuperação de palavra-passe.
+- Criação de estabelecimento.
+- Convite de membros e atribuição de funções.
+- Seleção do estabelecimento quando houver vários vínculos.
+- Encerramento de sessão.
+
+Onboarding inicial:
+
+1. Dados do estabelecimento.
+2. Região, moeda e fuso horário.
+3. Primeira unidade.
+4. Serviços.
+5. Profissionais e disponibilidade.
+6. Primeira marcação.
+
+Separe o ambiente de demonstração do ambiente de utilização real.
+
+## 8. Agenda e marcações
+
+A agenda é o núcleo operacional.
+
+Implemente:
+
+- Vistas diária, semanal e em lista.
+- Colunas por profissional na vista diária.
+- Filtros por unidade, profissional, serviço, recurso e estado.
+- Horários de funcionamento.
+- Disponibilidade individual.
+- Intervalos, férias e bloqueios.
+- Duração e intervalo de preparação por serviço.
+- Reserva de salas e equipamentos quando necessários.
+- Criação, reagendamento e cancelamento.
+- Lista de espera.
+- Painel lateral com detalhes.
+- Reagendamento por formulário e, posteriormente, por arrasto.
+
+Estados:
+
+- Agendado.
+- Confirmado.
+- Cliente chegou.
+- Em atendimento.
+- Concluído.
+- Cancelado.
+- Faltou.
+
+Defina as transições permitidas e registe autor e horário das alterações.
+
+**Integridade obrigatória:**
+
+- Impedir sobreposição indevida de profissional, sala ou equipamento.
+- Validar conflitos no banco ou servidor, inclusive em pedidos simultâneos.
+- Utilizar o mesmo motor de disponibilidade na agenda interna e na marcação pública.
+- Validar novamente a disponibilidade ao confirmar a reserva.
+- Tratar corretamente fusos horários e mudanças de hora.
+- Impedir efeitos duplicados quando uma operação é repetida.
+
+Não permita que arrastar um cartão contorne as regras de marcação.
+
+## 9. Clientes
+
+Implemente cadastro, pesquisa, filtros e ficha do cliente.
+
+Campos essenciais:
+
+- Nome.
+- Contactos.
+- Preferência de comunicação.
+- Observações operacionais.
+- Dados de faturação quando necessários.
+- Consentimentos e respetivo histórico.
+
+Ficha com:
+
+- Resumo.
+- Atendimentos.
+- Pacotes.
+- Financeiro.
+- Documentos e consentimentos.
+
+Mostre último atendimento, próxima marcação, sessões disponíveis e pendências.
+
+Implemente identificação de potenciais duplicados, com tratamento cuidadoso de importações.
+
+Informações sensíveis devem ter permissões específicas e não aparecer em listagens gerais ou notificações.
+
+## 10. Serviços, profissionais e recursos
+
+Serviços:
+
+- Nome e categoria.
+- Descrição.
+- Duração.
+- Intervalo de preparação.
+- Preço.
+- Profissionais habilitados.
+- Recursos necessários.
+- Disponibilidade para marcação pública.
+- Estado ativo ou inativo.
+
+Profissionais:
+
+- Dados essenciais.
+- Serviços habilitados.
+- Unidade.
+- Disponibilidade.
+- Regras de comissão.
+- Vínculo opcional a um utilizador.
+
+Preserve o histórico quando serviços, preços ou profissionais forem alterados.
+
+## 11. Pacotes e sessões
+
+Separe o modelo de pacote comercial do pacote efetivamente vendido ao cliente.
+
+Implemente:
+
+- Pacotes com um ou mais serviços e quantidades definidas.
+- Preço e condições registados no momento da venda.
+- Validade opcional.
+- Sessões contratadas, reservadas, realizadas e disponíveis.
+- Histórico de utilização.
+- Renovação.
+- Cancelamento e ajustes autorizados.
+
+**Regras obrigatórias:**
+
+- Marcar uma sessão não equivale a consumi-la.
+- Consumir a sessão na conclusão do atendimento.
+- Impedir consumo duplicado.
+- Impedir utilização acima do saldo, incluindo concorrência entre pedidos.
+- Registar reversões e ajustes com motivo e autor.
+- Definir explicitamente as consequências de falta, cancelamento tardio e validade.
+- Não descontar sessões por regras que não tenham sido configuradas.
+- Tratar pagamento e direito de utilização como conceitos separados, com política de bloqueio configurável.
+
+Utilize um histórico de movimentos rastreável para calcular o saldo.
+
+## 12. Atendimento e acompanhamento
+
+Permita:
+
+- Check-in.
+- Início e conclusão do atendimento.
+- Notas autorizadas.
+- Consulta do histórico.
+- Associação a pacote ou serviço avulso.
+- Próxima marcação.
+
+Implemente apenas os registos necessários ao escopo inicial de estética e depilação. Funcionalidades clínicas especializadas exigem definição e validação próprias.
+
+Evite gerar diagnósticos ou decisões clínicas automáticas.
+
+## 13. Financeiro
+
+Implemente:
+
+- Cobranças e parcelas.
+- Pagamentos totais e parciais.
+- Métodos de pagamento.
+- Despesas.
+- Estornos e ajustes rastreáveis.
+- Pendências e vencimentos.
+- Associação a cliente, atendimento ou venda de pacote.
+- Filtros e exportação autorizada.
+
+Diferencie claramente:
+
+- Venda.
+- Cobrança.
+- Pagamento.
+- Receita prevista.
+- Valor recebido.
+- Comissão.
+- Documento fiscal.
+
+Não apresente recibos internos como documentos fiscais oficiais.
+
+Use valores monetários com precisão adequada, sem cálculos financeiros baseados em ponto flutuante impreciso.
+
+Não elimine movimentos financeiros confirmados para corrigir erros; utilize reversões ou ajustes rastreáveis.
+
+## 14. Comissões
+
+Implemente regras por profissional e serviço:
+
+- Percentagem.
+- Valor fixo.
+- Ausência de comissão.
+
+Defina explicitamente o evento de cálculo: atendimento concluído ou pagamento recebido.
+
+Para pacotes, estabeleça uma regra documentada de distribuição do valor pelas sessões. Evite contabilização simultânea na venda e na realização.
+
+Registe a regra aplicada no momento do cálculo. Mudanças futuras não devem alterar silenciosamente períodos anteriores.
+
+Mostre demonstrativo com origem, base de cálculo, valor e estado de liquidação.
+
+## 15. Dashboard e relatórios
+
+Apresente:
+
+- Atendimentos do período.
+- Ocupação.
+- Cancelamentos e faltas.
+- Recebimentos.
+- Valores pendentes.
+- Pacotes próximos do fim.
+- Clientes sem próxima marcação.
+
+Documente as fórmulas dos indicadores.
+
+Todos os cartões, gráficos e listagens devem usar as mesmas definições, filtros e fontes de dados. Um indicador deve permitir abrir o detalhe correspondente.
+
+Não utilize métricas fixas ou números simulados no modo operacional.
+
+## 16. Página pública de marcações
+
+Crie uma página por estabelecimento com:
+
+- Identidade visual configurável.
+- Serviços publicados.
+- Profissionais disponíveis.
+- Seleção de data e horário.
+- Dados mínimos do cliente.
+- Confirmação.
+- Cancelamento ou reagendamento através de acesso seguro.
+
+A página pública só pode expor informações explicitamente publicadas. Não deve permitir consultar cadastros internos.
+
+Implemente proteção contra abuso e valide a reserva de forma atómica.
+
+## 17. Comunicação e retorno
+
+Prepare uma camada de comunicação para:
+
+- Confirmações.
+- Lembretes.
+- Cancelamentos.
+- Convites de retorno.
+- Avisos de renovação.
+
+Separe mensagens operacionais de campanhas comerciais e respeite as preferências registadas.
+
+Utilize fila de tarefas, controlo de repetição, prevenção de duplicados e histórico de entrega.
+
+Se não houver fornecedor configurado, apresente “Integração não configurada”. Disponibilize simulação apenas no ambiente de demonstração.
+
+Nunca indique que uma mensagem foi enviada quando apenas foi criada uma intenção de envio.
+
+## 18. Administração comercial da plataforma
+
+Prepare:
+
+- Planos e limites configuráveis.
+- Estado da assinatura.
+- Período de avaliação.
+- Limites por unidade e profissionais.
+- Configuração visual básica por estabelecimento.
+- Controlo de funcionalidades por plano.
+
+Separe o pagamento da assinatura do SaaS dos pagamentos realizados pelos clientes dos estabelecimentos.
+
+A cobrança automática da assinatura pode ser integrada depois do núcleo operacional. Até lá, utilize administração manual explícita.
+
+Evite criar versões separadas do código por cliente.
+
+## 19. Segurança, dados e operação
+
+Implemente:
+
+- RLS e permissões explícitas nas migrações.
+- Autorização em funções e operações privilegiadas.
+- Storage privado e acessos temporários autorizados.
+- Validação no servidor.
+- Auditoria de alterações relevantes.
+- Gestão segura de segredos.
+- Limites de pedidos nas superfícies públicas.
+- Logs sem exposição desnecessária de dados pessoais.
+- Procedimentos de backup e recuperação.
+- Exportação autorizada de dados.
+
+Documente o que foi implementado e o que depende da configuração de infraestrutura. Não declare conformidade legal automática.
+
+## 20. Qualidade e testes de aceitação
+
+Teste os percursos completos e os riscos principais:
+
+1. Uma empresa não consegue consultar ou alterar dados de outra.
+2. Cada função só executa operações permitidas.
+3. Duas reservas simultâneas para o mesmo recurso não são aceites indevidamente.
+4. Repetir a conclusão de um atendimento não desconta duas sessões.
+5. O saldo de sessões permanece correto após cancelamento e reversão.
+6. Pagamentos parciais e estornos atualizam os saldos corretamente.
+7. Comissões respeitam a regra e não são duplicadas.
+8. A marcação pública respeita a disponibilidade interna.
+9. Datas mantêm coerência no fuso horário configurado.
+10. Dashboard e listagens apresentam totais compatíveis.
+
+Inclua verificação de acessibilidade e dos percursos principais em ecrãs pequenos.
+
+## 21. Ordem de execução
+
+Execute em fases:
+
+**Fase 1 — Fundação:** arquitetura, migrações, autenticação, estabelecimentos, funções e layout base.
+
+**Fase 2 — Operação:** serviços, profissionais, clientes, disponibilidade e agenda.
+
+**Fase 3 — Sessões:** pacotes, venda, reservas, consumo e atendimento.
+
+**Fase 4 — Financeiro:** cobranças, pagamentos, despesas e comissões.
+
+**Fase 5 — Crescimento:** página pública, comunicação, lista de espera e retorno.
+
+**Fase 6 — Comercialização:** planos, administração da plataforma, relatórios e preparação operacional.
+
+Mantenha o sistema executável ao concluir cada fase. Valide as dependências antes de avançar.
+
+## 22. Entrega e critérios de conclusão
+
+Entregue:
+
+- Código-fonte organizado.
+- Migrações versionadas.
+- Dados de demonstração separados.
+- Ficheiro de exemplo de variáveis de ambiente.
+- Instruções de instalação e configuração.
+- Documentação das regras principais.
+- Matriz de permissões.
+- Testes e resultados das verificações executadas.
+- Lista objetiva de integrações e configurações pendentes.
+- Instruções de publicação e recuperação.
+
+Não considere uma funcionalidade concluída apenas porque a tela existe. Ela deve persistir dados, aplicar permissões, respeitar as regras, tratar erros e funcionar no percurso completo.
+
+Comece pela inspeção do projeto e implemente a primeira fase. Prossiga pelas fases autorizadas, comunicando resultados concretos e bloqueios reais. Solicite esclarecimento apenas quando uma decisão impedir efetivamente o avanço.

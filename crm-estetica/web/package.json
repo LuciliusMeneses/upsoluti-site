@@ -1,0 +1,41 @@
+{
+    "name":  "crm-estetica",
+    "private":  true,
+    "version":  "0.1.0",
+    "type":  "module",
+    "engines":  {
+                    "node":  "24.x"
+                },
+    "scripts":  {
+                    "dev":  "vite --host 127.0.0.1 --port 3220 --strictPort",
+                    "dev:booking":  "node scripts/dev-booking-server.mjs",
+                    "build":  "tsc --noEmit \u0026\u0026 vite build",
+                    "test":  "vitest run",
+                    "qa:public:local":  "npm run build \u0026\u0026 node scripts/qa-public-local.mjs",
+                    "dev:platform":  "node scripts/dev-company-server.mjs",
+                    "qa:companies:local":  "npm run build \u0026\u0026 node scripts/qa-manual-companies-local.mjs",
+                    "qa:resources:local":  "npm run build \u0026\u0026 node scripts/qa-resources-local.mjs"
+                },
+    "dependencies":  {
+                         "@hookform/resolvers":  "^5.2.0",
+                         "@supabase/supabase-js":  "^2.80.0",
+                         "@tanstack/react-query":  "^5.90.0",
+                         "lucide-react":  "^0.468.0",
+                         "react":  "^19.2.0",
+                         "react-dom":  "^19.2.0",
+                         "react-hook-form":  "^7.66.0",
+                         "zod":  "^4.1.0"
+                     },
+    "devDependencies":  {
+                            "@electric-sql/pglite":  "^0.5.15",
+                            "@tailwindcss/vite":  "^4.1.0",
+                            "@types/node":  "^26.6.6",
+                            "@types/react":  "^19.2.0",
+                            "@types/react-dom":  "^19.2.0",
+                            "@vitejs/plugin-react":  "^5.1.0",
+                            "tailwindcss":  "^4.1.0",
+                            "typescript":  "^5.9.0",
+                            "vite":  "^7.2.0",
+                            "vitest":  "^4.0.0"
+                        }
+}

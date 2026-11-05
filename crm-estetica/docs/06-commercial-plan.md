@@ -1,0 +1,9 @@
+# Retomada — núcleo comercial administrativo
+
+Usuário autorizou continuar pela melhor dependência arquitetural. Primeiro marco: área `/platform` separada, planos versionados configuráveis, empresas/assinaturas administradas manualmente, direitos no servidor, provisionamento idempotente, leitura da assinatura pelo assinante e exportação da fundação. Sem preços comerciais inventados, débito automático, e-mails, suporte com bypass ou agenda operacional nesta etapa.
+
+O rascunho operacional foi preservado em `docs/drafts/operations.sql`, fora da pasta de migrations. A próxima migration aplicada será exclusivamente comercial. Papéis globais vivem em tabela privada, sem qualquer privilégio derivado do e-mail/nome de uma conta. Bootstrap de um operador de testes por ferramenta local de servidor com auditoria; nenhuma chave privilegiada no frontend.
+
+Planos publicados permitem provisionamento: avaliação se configurada, senão contratação pendente de ativação administrativa. Ativação não representa pagamento recebido. Expiração, inadimplência após carência e cancelamento efetivo restringem gravações; leitura e exportação do proprietário continuam. Limites atuais de unidades e membros são verificados em transação, inclusive convite concorrente. Limite de profissionais e recursos futuros é armazenado, mas só será declarado operacional quando seus módulos existirem e chamarem a mesma regra.
+
+Critérios: operador cria versão de plano, conta de estabelecimento cria ambiente/assinatura com esse plano, operador gerencia estado com motivo/versão, assinante consulta seus direitos sem alterar cobrança. Testar negação de acesso global a tenant owner, isolamento, quotas/concorrência, idempotência, snapshots, ciclo de vida e exportação sem segredos. Build/testes/QA local e Vercel antes de declarar publicação verificada.

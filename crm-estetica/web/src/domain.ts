@@ -1,0 +1,23 @@
+import { z } from 'zod';
+export type Locale = 'pt-BR' | 'pt-PT';
+export type Role = 'owner' | 'manager' | 'reception' | 'professional';
+export const can = (role: Role, action: 'settings' | 'reports' | 'appointments' | 'ownSchedule') => ({settings:['owner'],reports:['owner','manager'],appointments:['owner','manager','reception'],ownSchedule:['owner','manager','reception','professional']}[action].includes(role));
+export const companySchema = z.object({ name:z.string().trim().min(2).max(100), unit:z.string().trim().min(2).max(100), locale:z.enum(['pt-BR','pt-PT']), country:z.enum(['BR','PT']), currency:z.enum(['BRL','EUR']), timezone:z.enum(['America/Sao_Paulo','Europe/Lisbon']) });
+export type CompanyInput = z.infer<typeof companySchema>;
+export const copy = {
+ 'pt-BR': { overview:'Visão geral',agenda:'Agenda',clients:'Clientes',packages:'Pacotes e sessões',finance:'Financeiro e comissões',team:'Equipe',services:'Serviços',resources:'Recursos',reports:'Relatórios',settings:'Configurações',title:'Agenda operacional',newBooking:'Novo agendamento',today:'Hoje',day:'Dia',week:'Semana',list:'Lista',search:'Buscar cliente ou serviço',unit:'Unidade',all:'Todos',waiting:'Aguardando chegada',arrived:'Cliente chegou',progress:'Em atendimento',done:'Concluídos',professional:'Profissional',reception:'Recepção e gestão',login:'Entrar',password:'Senha',recover:'Recuperar senha',save:'Salvar',cancel:'Cancelar',create:'Criar estabelecimento',currency:'Moeda',timezone:'Fuso horário',language:'Idioma',demo:'Demonstração',demoNote:'Dados fictícios. As alterações desta prévia não são gravadas.',next:'Próxima sessão',support:'Ajuda e suporte',empty:'Nenhum resultado encontrado',phase:'Disponível numa próxima etapa',logout:'Sair',back:'Voltar',account:'Acessar minha conta',config:'Integração não configurada',pending:'Pendente',confirmed:'Confirmado',scheduled:'Agendado',return:'Clientes sem próximo agendamento',active:'Estabelecimento ativo' },
+ 'pt-PT': { overview:'Visão geral',agenda:'Agenda',clients:'Clientes',packages:'Pacotes e sessões',finance:'Financeiro e comissões',team:'Equipa',services:'Serviços',resources:'Recursos',reports:'Relatórios',settings:'Definições',title:'Agenda operacional',newBooking:'Nova marcação',today:'Hoje',day:'Dia',week:'Semana',list:'Lista',search:'Pesquisar cliente ou serviço',unit:'Unidade',all:'Todos',waiting:'A aguardar chegada',arrived:'Cliente chegou',progress:'Em atendimento',done:'Concluídos',professional:'Profissional',reception:'Receção e gestão',login:'Iniciar sessão',password:'Palavra-passe',recover:'Recuperar palavra-passe',save:'Guardar',cancel:'Cancelar',create:'Criar estabelecimento',currency:'Moeda',timezone:'Fuso horário',language:'Idioma',demo:'Demonstração',demoNote:'Dados fictícios. As alterações desta pré-visualização não são guardadas.',next:'Próxima sessão',support:'Ajuda e apoio',empty:'Nenhum resultado encontrado',phase:'Disponível numa próxima etapa',logout:'Terminar sessão',back:'Voltar',account:'Aceder à minha conta',config:'Integração não configurada',pending:'Pendente',confirmed:'Confirmado',scheduled:'Marcado',return:'Clientes sem próxima marcação',active:'Estabelecimento ativo' }
+} as const;
+export const money = (cents:number,locale:Locale,currency:string) => new Intl.NumberFormat(locale,{style:'currency',currency}).format(cents/100);
+export type Appointment = {id:number;name:string;service:string;professional:number;time:string;duration:number;status:'done'|'progress'|'arrived'|'confirmed'|'scheduled';package?:string};
+export const professionals = ['Camila Silveira','Renata Dias','Beatriz Martins'];
+export const demoAppointments:Appointment[] = [
+ {id:1,name:'Ana Clara Sousa',service:'Laser virilha completa',professional:0,time:'13:00',duration:30,status:'done'},
+ {id:2,name:'Fernanda Lima',service:'Limpeza de pele profunda',professional:1,time:'13:00',duration:60,status:'done'},
+ {id:3,name:'Mariana Prado',service:'Depilação a laser · Axilas + virilha',professional:0,time:'14:00',duration:45,status:'progress',package:'Laser Gold'},
+ {id:4,name:'Larissa Fontes',service:'Limpeza de pele',professional:2,time:'13:30',duration:45,status:'confirmed'},
+ {id:5,name:'Juliana Mendes',service:'Revitalização facial',professional:1,time:'14:45',duration:45,status:'arrived'},
+ {id:6,name:'Carolina Matos',service:'Laser pernas inteiras + virilha',professional:0,time:'15:15',duration:60,status:'confirmed',package:'Laser Prime'},
+ {id:7,name:'Fernanda Guimarães',service:'Drenagem facial',professional:1,time:'15:30',duration:60,status:'scheduled'},
+ {id:8,name:'Patrícia Nogueira',service:'Hidratação facial',professional:2,time:'16:00',duration:60,status:'scheduled'}
+];

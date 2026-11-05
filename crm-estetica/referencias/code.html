@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Aura Estética - Agenda Operacional &amp; Gestão Clínica</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Inter Google Font -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config verbatim -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "secondary": "#006b5f",
+            "surface-container-low": "#f0f3ff",
+            "surface-bright": "#f9f9ff",
+            "secondary-fixed": "#62fae3",
+            "surface-tint": "#216964",
+            "surface-container-highest": "#d8e3fb",
+            "surface-dim": "#cfdaf2",
+            "status-canceled": "#EF4444",
+            "error-container": "#ffdad6",
+            "inverse-on-surface": "#ecf1ff",
+            "on-tertiary-container": "#7ed5cd",
+            "border-subtle": "#E2E8F0",
+            "surface-card": "#FFFFFF",
+            "primary-fixed": "#abefe9",
+            "inverse-surface": "#263143",
+            "on-secondary-fixed": "#00201c",
+            "tertiary": "#00433f",
+            "surface-variant": "#d8e3fb",
+            "status-pending": "#F59E0B",
+            "text-muted": "#64748B",
+            "on-tertiary-fixed-variant": "#00504b",
+            "on-primary": "#ffffff",
+            "on-secondary-fixed-variant": "#005047",
+            "tertiary-fixed": "#9af2e9",
+            "on-primary-fixed": "#00201e",
+            "on-tertiary-fixed": "#00201e",
+            "primary-container": "#0d5c58",
+            "error": "#ba1a1a",
+            "surface-mint": "#E6F4F1",
+            "on-primary-fixed-variant": "#00504c",
+            "status-in-progress": "#8B5CF6",
+            "surface-container": "#e7eeff",
+            "status-info": "#3B82F6",
+            "surface-subtle": "#F1F5F9",
+            "tertiary-fixed-dim": "#7ed6cd",
+            "on-secondary": "#ffffff",
+            "on-tertiary": "#ffffff",
+            "status-success": "#10B981",
+            "surface-container-lowest": "#ffffff",
+            "on-secondary-container": "#007165",
+            "background": "#f9f9ff",
+            "on-error": "#ffffff",
+            "surface": "#f9f9ff",
+            "primary-fixed-dim": "#8fd3cd",
+            "secondary-container": "#62fae3",
+            "tertiary-container": "#005d57",
+            "on-primary-container": "#8ed2cc",
+            "inverse-primary": "#8fd3cd",
+            "on-surface-variant": "#3f4947",
+            "primary": "#004340",
+            "surface-container-high": "#dee8ff",
+            "secondary-fixed-dim": "#3cddc7",
+            "on-surface": "#111c2d",
+            "on-background": "#111c2d",
+            "outline-variant": "#bec9c7",
+            "surface-bg": "#F8FAFC",
+            "outline": "#6f7978",
+            "on-error-container": "#93000a"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-2xl": "3rem",
+            "gutter": "1.5rem",
+            "margin-mobile": "1rem",
+            "space-xs": "0.25rem",
+            "gutter-mobile": "1rem",
+            "space-md": "1rem",
+            "space-xl": "2rem",
+            "space-sm": "0.5rem",
+            "margin": "2rem",
+            "space-lg": "1.5rem"
+          },
+          "fontFamily": {
+            "headline-lg": ["Inter"],
+            "body-lg": ["Inter"],
+            "label-sm": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "display-lg-mobile": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-sm": ["Inter"],
+            "label-lg": ["Inter"],
+            "display-lg": ["Inter"],
+            "body-md": ["Inter"],
+            "caption": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-sm": ["Inter"]
+          },
+          "fontSize": {
+            "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+            "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.03em", "fontWeight": "600"}],
+            "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "display-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+            "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+            "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+            "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+            "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+            "caption": ["10px", {"lineHeight": "12px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+            "headline-md": ["22px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #F8FAFC;
+      color: #111c2d;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #F1F5F9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94A3B8;
+    }
+  </style>
+</head>
+<body class="bg-surface-bg text-on-surface antialiased flex h-screen overflow-hidden">
+<!-- ========================================== -->
+<!-- 1. BARRA LATERAL (SIDEBAR) - SHARED COMPONENT -->
+<!-- ========================================== -->
+<aside class="fixed top-0 left-0 h-screen w-64 flex flex-col justify-between p-4 z-40 bg-surface-card border-r border-border-subtle shadow-sm select-none">
+<!-- Header Brand & Identity -->
+<div>
+<div class="flex items-center gap-3 px-2 py-2 mb-4">
+<div class="w-10 h-10 rounded-xl bg-surface-mint flex items-center justify-center text-primary-container shadow-xs">
+<span class="material-symbols-outlined text-2xl" data-icon="spa">spa</span>
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary leading-tight">Aura Estética</h1>
+<p class="font-label-md text-label-md text-text-muted">Unidade Jardins</p>
+</div>
+</div>
+<!-- Quick Action CTA -->
+<button class="w-full mb-6 bg-primary-container hover:bg-tertiary transition-all duration-150 active:scale-[0.99] text-on-primary py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 font-label-lg text-label-lg shadow-sm">
+<span class="material-symbols-outlined text-xl" data-icon="add">add</span>
+<span>Novo Agendamento</span>
+</button>
+<!-- Navigation Tabs (from Shared Component JSON: "Agenda" mapped as active) -->
+<nav class="space-y-1">
+<!-- 0: Visão Geral -->
+<a class="flex items-center gap-3 text-text-muted hover:text-on-surface hover:bg-surface-subtle font-label-lg text-label-lg rounded-lg px-3 py-2.5 transition-all duration-150 active:scale-[0.99]" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span>Visão Geral</span>
+</a>
+<!-- 1: Agenda (ACTIVE) -->
+<a class="flex items-center gap-3 bg-surface-mint text-primary-container font-label-lg text-label-lg rounded-lg px-3 py-2.5 transition-all duration-150 active:scale-[0.99] font-semibold" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="calendar_today" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+<span class="flex-1">Agenda</span>
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+</a>
+<!-- 2: Clientes -->
+<a class="flex items-center gap-3 text-text-muted hover:text-on-surface hover:bg-surface-subtle font-label-lg text-label-lg rounded-lg px-3 py-2.5 transition-all duration-150 active:scale-[0.99]" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="groups">groups</span>
+<span>Clientes</span>
+</a>
+<!-- 3: Pacotes & Sessões -->
+<a class="flex items-center gap-3 text-text-muted hover:text-on-surface hover:bg-surface-subtle font-label-lg text-label-lg rounded-lg px-3 py-2.5 transition-all duration-150 active:scale-[0.99]" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="loyalty">loyalty</span>
+<span>Pacotes &amp; Sessões</span>
+</a>
+<!-- 4: Financeiro & Comissões -->
+<a class="flex items-center gap-3 text-text-muted hover:text-on-surface hover:bg-surface-subtle font-label-lg text-label-lg rounded-lg px-3 py-2.5 transition-all duration-150 active:scale-[0.99]" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="payments">payments</span>
+<span>Financeiro &amp; Comissões</span>
+</a>
+<!-- 5: Equipe -->
+<a class="flex items-center gap-3 text-text-muted hover:text-on-surface hover:bg-surface-subtle font-label-lg text-label-lg rounded-lg px-3 py-2.5 transition-all font-label-lg text-label-lg rounded-lg px-3 py-2.5 transition-all duration-150 active:scale-[0.99]" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="badge">badge</span>
+<span>Equipe</span>
+</a>
+<!-- 6: Serviços -->
+<a class="flex items-center gap-3 text-text-muted hover:text-on-surface hover:bg-surface-subtle font-label-lg text-label-lg rounded-lg px-3 py-2.5 transition-all duration-150 active:scale-[0.99]" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="spa">spa</span>
+<span>Serviços</span>
+</a>
+<!-- 7: Relatórios -->
+<a class="flex items-center gap-3 text-text-muted hover:text-on-surface hover:bg-surface-subtle font-label-lg text-label-lg rounded-lg px-3 py-2.5 transition-all duration-150 active:scale-[0.99]" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="analytics">analytics</span>
+<span>Relatórios</span>
+</a>
+<!-- 8: Configurações -->
+<a class="flex items-center gap-3 text-text-muted hover:text-on-surface hover:bg-surface-subtle font-label-lg text-label-lg rounded-lg px-3 py-2.5 transition-all duration-150 active:scale-[0.99]" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+<span>Configurações</span>
+</a>
+</nav>
+</div>
+<!-- Rodapé da Barra Lateral: Suporte & Perfil da Recepcionista Gestora -->
+<div class="border-t border-border-subtle pt-3 space-y-2">
+<a class="flex items-center gap-3 text-text-muted hover:text-on-surface hover:bg-surface-subtle font-label-md text-label-md rounded-lg px-3 py-2 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="help">help</span>
+<span>Suporte Clínico</span>
+</a>
+<!-- Perfil Operacional -->
+<div class="flex items-center justify-between p-2 rounded-xl bg-surface-subtle hover:bg-border-subtle/50 transition-colors">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="relative w-9 h-9 rounded-full overflow-hidden shrink-0 border border-white">
+<img class="w-full h-full object-cover" data-alt="Foto de perfil profissional da recepcionista gestora com jaleco clínico elegante em tom verde-petróleo suave, fundo claro desfocado, iluminação estética natural de clínica de dermatologia e beleza de alto padrão." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoev9hKEjjSfyEhRJn5rfNJiFqIDySnyO4GvbG6iL9ioBOa9o9qTYYMNK2eYLruTynsoQQ0YbRzXTuV9zytKC0EByKJUwKnrA5G8CWPAvReByXZ3np-GSySSzq4aoNHRKo6Tu31LjHuryCC4i1WIN_HzP7NlOzrtdc-LryF9E-tEBz7X5jsVf8rqnpw3o-28aGSG2V8om_zUi3SYytLi_Vq6XSbyfxibBCWUseJAeA"/>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-status-success rounded-full ring-2 ring-white"></span>
+</div>
+<div class="min-w-0">
+<p class="font-label-md text-label-md font-semibold text-on-surface truncate">Thaís Rocha</p>
+<p class="font-caption text-caption text-text-muted truncate">Recepção &amp; Gestão</p>
+</div>
+</div>
+<button class="text-text-muted hover:text-error p-1 rounded-lg" title="Sair">
+<span class="material-symbols-outlined text-lg" data-icon="logout">logout</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- ========================================== -->
+<!-- 2. TOPO SUPERIOR (TOPBAR) - SHARED COMPONENT -->
+<!-- ========================================== -->
+<header class="fixed top-0 right-0 left-64 h-16 flex items-center justify-between px-6 z-30 bg-surface-card border-b border-border-subtle shadow-sm select-none">
+<!-- Esquerda: Título da Agenda, Breadcrumb e Tag de Ocupação -->
+<div class="flex items-center gap-4">
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-primary">Agenda Operacional</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success animate-pulse"></span>
+            Cabines: 8/10 Ocupadas
+          </span>
+</div>
+</div>
+<!-- Seletor de Unidade -->
+<div class="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border-subtle bg-surface-bg text-on-surface hover:bg-surface-subtle cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="store">store</span>
+<span class="font-label-md text-label-md font-medium">Unidade Jardins (Ativa)</span>
+<span class="material-symbols-outlined text-sm text-text-muted" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</div>
+</div>
+<!-- Centro: Campo de Busca Global com Atalho -->
+<div class="relative w-80 max-w-sm">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-muted text-lg" data-icon="search">search</span>
+<input class="w-full pl-9 pr-14 py-1.5 bg-surface-bg border border-border-subtle rounded-xl text-body-sm font-body-sm text-on-surface placeholder:text-text-muted focus:outline-none focus:border-primary-container focus:ring-2 focus:ring-surface-mint transition-all" placeholder="Buscar cliente, agendamento ou CPF..." type="text"/>
+<kbd class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-semibold text-text-muted bg-white px-1.5 py-0.5 rounded border border-border-subtle">⌘ K</kbd>
+</div>
+<!-- Direita: Ações Rápidas, Badges e Botão Novo Agendamento -->
+<div class="flex items-center gap-3">
+<!-- Lista de Espera Rápida -->
+<button class="relative flex items-center gap-1.5 px-3 py-1.5 text-text-muted hover:text-on-surface rounded-lg hover:bg-surface-subtle transition-colors" title="Lista de Espera">
+<span class="material-symbols-outlined text-xl" data-icon="hourglass_empty">hourglass_empty</span>
+<span class="font-label-md text-label-md hidden md:inline">Espera</span>
+<span class="inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold bg-amber-100 text-amber-900 rounded-full">3</span>
+</button>
+<!-- Ícones de Notificação & Ajustes -->
+<div class="flex items-center gap-1">
+<button class="relative p-2 text-text-muted hover:text-on-surface hover:bg-surface-subtle rounded-lg transition-colors" title="Notificações">
+<span class="material-symbols-outlined text-xl" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full ring-2 ring-white"></span>
+</button>
+<button class="p-2 text-text-muted hover:text-on-surface hover:bg-surface-subtle rounded-lg transition-colors" title="Chat Interno">
+<span class="material-symbols-outlined text-xl" data-icon="chat">chat</span>
+</button>
+<button class="p-2 text-text-muted hover:text-on-surface hover:bg-surface-subtle rounded-lg transition-colors" title="Configurações Rápidas">
+<span class="material-symbols-outlined text-xl" data-icon="tune">tune</span>
+</button>
+</div>
+<div class="h-6 w-px bg-border-subtle mx-1"></div>
+<!-- Check-in Rápido -->
+<button class="hidden lg:flex items-center gap-1.5 px-3 py-2 rounded-xl text-primary-container bg-surface-mint hover:bg-secondary-container/30 transition-colors font-label-md text-label-md">
+<span class="material-symbols-outlined text-lg" data-icon="qr_code_scanner">qr_code_scanner</span>
+<span>Check-in Rápido</span>
+</button>
+<!-- Botão Primário Novo Agendamento -->
+<button class="flex items-center gap-1.5 px-4 py-2 bg-primary-container hover:bg-tertiary text-on-primary rounded-xl font-label-md text-label-md shadow-sm transition-all duration-150 active:scale-95">
+<span class="material-symbols-outlined text-lg" data-icon="add">add</span>
+<span>Novo Agendamento</span>
+<kbd class="text-[10px] bg-primary/40 text-white px-1 rounded ml-1 font-mono">N</kbd>
+</button>
+</div>
+</header>
+<!-- ========================================== -->
+<!-- CONTEÚDO PRINCIPAL: AGENDAS + DOCK LATERAL -->
+<!-- ========================================== -->
+<main class="ml-64 mt-16 flex-1 flex overflow-hidden h-[calc(100vh-4rem)]">
+<!-- ÁREA ESQUERDA / CENTRO: BARRA DE FERRAMENTAS + GRADE DE HORÁRIOS -->
+<section class="flex-1 flex flex-col min-w-0 bg-surface-bg overflow-hidden border-r border-border-subtle">
+<!-- 3. BARRA DE CONTROLE & FERRAMENTAS DA AGENDA -->
+<div class="bg-surface-card px-6 py-3.5 border-b border-border-subtle space-y-3 shrink-0">
+<!-- Linha Superior: Navegação Temporal e Alternância de Visualização -->
+<div class="flex flex-wrap items-center justify-between gap-3">
+<!-- Seletor de Data -->
+<div class="flex items-center gap-3">
+<div class="flex items-center border border-border-subtle rounded-xl bg-surface-card overflow-hidden shadow-xs">
+<button class="p-1.5 hover:bg-surface-subtle text-on-surface transition-colors" title="Dia Anterior">
+<span class="material-symbols-outlined text-lg" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="px-3 py-1 text-label-md font-label-md font-semibold text-primary hover:bg-surface-mint transition-colors">
+                Hoje
+              </button>
+<button class="p-1.5 hover:bg-surface-subtle text-on-surface transition-colors" title="Próximo Dia">
+<span class="material-symbols-outlined text-lg" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container" data-icon="calendar_month">calendar_month</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight">
+                Quinta-feira, 24 de Outubro de 2024
+              </h2>
+</div>
+</div>
+<!-- Alternadores de Modo e Ações Estratégicas -->
+<div class="flex items-center gap-3">
+<!-- Alternador de Visualização -->
+<div class="bg-surface-subtle p-1 rounded-xl flex items-center gap-1 border border-border-subtle text-label-md font-label-md">
+<button class="px-3 py-1.5 rounded-lg bg-surface-card text-primary font-semibold shadow-xs flex items-center gap-1.5">
+<span class="material-symbols-outlined text-base" data-icon="view_column">view_column</span>
+<span>Dia (Profissionais)</span>
+</button>
+<button class="px-3 py-1.5 rounded-lg text-text-muted hover:text-on-surface transition-colors">Semana</button>
+<button class="px-3 py-1.5 rounded-lg text-text-muted hover:text-on-surface transition-colors">Mês</button>
+<button class="px-3 py-1.5 rounded-lg text-text-muted hover:text-on-surface transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-base" data-icon="format_list_bulleted">format_list_bulleted</span>
+<span>Lista</span>
+</button>
+</div>
+<!-- Botões Bloquear e Otimizar -->
+<button class="px-3 py-1.5 rounded-xl border border-border-subtle hover:bg-surface-subtle text-text-muted hover:text-on-surface transition-colors font-label-md text-label-md flex items-center gap-1.5">
+<span class="material-symbols-outlined text-base" data-icon="lock_clock">lock_clock</span>
+<span>Bloquear Horário</span>
+</button>
+<button class="px-3 py-1.5 rounded-xl bg-surface-mint text-primary-container hover:bg-secondary-fixed/30 transition-colors font-label-md text-label-md font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-base" data-icon="auto_awesome">auto_awesome</span>
+<span>Otimizar Encaixes</span>
+</button>
+</div>
+</div>
+<!-- Linha Inferior: Filtros de Status Operacional e Cabines -->
+<div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+<!-- Filtros de Status com Contadores -->
+<div class="flex items-center gap-1.5 overflow-x-auto custom-scrollbar pb-1 text-label-md font-label-md">
+<button class="px-3 py-1 rounded-full bg-primary-container text-on-primary font-semibold transition-all">
+              Todos <span class="ml-1 opacity-80 text-xs">28</span>
+</button>
+<button class="px-3 py-1 rounded-full bg-amber-50 text-amber-900 border border-amber-200 hover:bg-amber-100 transition-colors flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-pending"></span>
+              Aguardando Chegada <span class="font-bold ml-1 text-xs">6</span>
+</button>
+<button class="px-3 py-1 rounded-full bg-blue-50 text-blue-800 border border-blue-200 hover:bg-blue-100 transition-colors flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-info"></span>
+              Cliente Chegou <span class="font-bold ml-1 text-xs">3</span>
+</button>
+<button class="px-3 py-1 rounded-full bg-purple-50 text-purple-900 border border-purple-200 hover:bg-purple-100 transition-colors flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-in-progress animate-pulse"></span>
+              Em Atendimento <span class="font-bold ml-1 text-xs">4</span>
+</button>
+<button class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-200 hover:bg-emerald-100 transition-colors flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-success"></span>
+              Concluídos <span class="font-bold ml-1 text-xs">12</span>
+</button>
+<button class="px-3 py-1 rounded-full bg-rose-50 text-rose-800 border border-rose-200 hover:bg-rose-100 transition-colors flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-canceled"></span>
+              Conflito <span class="font-bold ml-1 text-xs">1</span>
+</button>
+</div>
+<!-- Filtros de Especialidade & Cabine -->
+<div class="flex items-center gap-2">
+<span class="font-caption text-caption text-text-muted uppercase tracking-wider font-semibold">Cabines:</span>
+<div class="flex items-center gap-1">
+<span class="px-2 py-0.5 rounded text-xs font-semibold bg-surface-subtle text-primary border border-border-subtle cursor-pointer">Todas</span>
+<span class="px-2 py-0.5 rounded text-xs font-medium text-text-muted hover:bg-surface-subtle cursor-pointer">1</span>
+<span class="px-2 py-0.5 rounded text-xs font-medium text-text-muted hover:bg-surface-subtle cursor-pointer">2</span>
+<span class="px-2 py-0.5 rounded text-xs font-medium text-text-muted hover:bg-surface-subtle cursor-pointer">3</span>
+<span class="px-2 py-0.5 rounded text-xs font-medium text-text-muted hover:bg-surface-subtle cursor-pointer">4</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 4. ÁREA PRINCIPAL DA AGENDA MULTICOLUNA (GRID POR PROFISSIONAL / CABINE) -->
+<div class="flex-1 overflow-y-auto overflow-x-auto custom-scrollbar relative bg-surface-bg">
+<!-- Indicador de Horário Atual ('14:35 Agora') atravessando a grade -->
+<div class="absolute left-0 right-0 top-[395px] z-20 pointer-events-none flex items-center">
+<div class="w-20 pr-2 flex justify-end">
+<span class="px-1.5 py-0.5 rounded bg-primary-container text-white font-caption text-caption font-bold shadow-xs">
+              14:35
+            </span>
+</div>
+<div class="flex-1 h-0.5 bg-primary-container shadow-xs"></div>
+<div class="w-2 h-2 rounded-full bg-primary-container -ml-1"></div>
+</div>
+<div class="min-w-[960px] pb-12">
+<!-- Cabeçalho das Colunas: Profissionais & Cabines -->
+<div class="grid grid-cols-[80px_repeat(4,1fr)] sticky top-0 z-10 bg-surface-card border-b border-border-subtle shadow-xs">
+<!-- Coluna 0: Canto da Régua de Tempo -->
+<div class="p-3 border-r border-border-subtle flex items-center justify-center text-text-muted font-caption text-caption uppercase tracking-wider font-semibold">
+              Horário
+            </div>
+<!-- Coluna 1: Dra. Camila Silveira -->
+<div class="p-3 border-r border-border-subtle bg-surface-card">
+<div class="flex items-center gap-2.5">
+<div class="relative w-8 h-8 rounded-full overflow-hidden shrink-0 border border-primary-container/20">
+<img class="w-full h-full object-cover" data-alt="Retrato profissional de médica dermatologista brasileira feminina com jaleco premium branco, cabelo preso, sorriso sereno, ambiente de clínica estética de luxo e iluminação suave." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB553xlsofBKTMRcp2EPkCv7ZjjRoLvfe74FtjwlAcI1q4bYcVF35y-aEkLL3iaeGgCYcc7gYO9Z4GOApdbf3UhU9MmK1qvBfH0eLtAVCpK_pHX_Cr6SglQT9DszuOPeLix_H2EzUYuLB2DHsRw4k9Z6XcbQhORuUKC5nxMelVHC122hu6oUrHd4s2R4jXhQQLOpqzNAULF7UX9eyv87PA2NAYffcUVtBZ-2fQ_C2RT"/>
+</div>
+<div class="min-w-0">
+<h3 class="font-label-lg text-label-lg font-semibold text-on-surface truncate">Dra. Camila Silveira</h3>
+<div class="flex items-center gap-1.5 font-caption text-caption text-text-muted">
+<span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="truncate">Cabine 02 • Laser Alexandrite</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Coluna 2: Esteticista Renata Dias -->
+<div class="p-3 border-r border-border-subtle bg-surface-card">
+<div class="flex items-center gap-2.5">
+<div class="relative w-8 h-8 rounded-full overflow-hidden shrink-0 border border-secondary/20">
+<img class="w-full h-full object-cover" data-alt="Fotografia de perfil de profissional de estética feminina, expressão acolhedora, uniforme minimalista verde sálvia, clínica de cuidados com a pele moderna e impecável." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFfMze5h1J09a0UYKNCaKY8RsgNoDh_R5EikAHyGo_U1wvfq0nNyx3zDsshTaZ_irK7j4GriBnEjGKVaW8p1KQiJ9Uf3-PBQwiqQLRiWx4KY1o8zxJM6NuFUpZs0NvuYBB47esC0GQMJ2Jz1_655fsHnYvdHVYWiATBFwghLA21sgEgf9b_bZZ55tPKG65XK3a8Iy8TPHpilQSfEDD1a50NqLCWcC2wYcpj5VJopvH"/>
+</div>
+<div class="min-w-0">
+<h3 class="font-label-lg text-label-lg font-semibold text-on-surface truncate">Renata Dias</h3>
+<div class="flex items-center gap-1.5 font-caption text-caption text-text-muted">
+<span class="inline-block w-2 h-2 rounded-full bg-purple-500"></span>
+<span class="truncate">Cabine 01 • Facial &amp; Corporal</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Coluna 3: Dra. Vanessa Prado -->
+<div class="p-3 border-r border-border-subtle bg-surface-card">
+<div class="flex items-center gap-2.5">
+<div class="relative w-8 h-8 rounded-full overflow-hidden shrink-0 border border-primary-container/20">
+<img class="w-full h-full object-cover" data-alt="Retrato de biomédica esteta feminina especialista em procedimentos injetáveis, postura confiante e amigável em consultório médico iluminado por luz solar suave." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZhtE0PZRaXMDU3BwRTJJTRm_lUuRcylTJxqS-W5OP7byC4D0jW4BEj3kfLwsqaoneV_6aAOgTLwcq_eUT7uEyIweIultsKx3KExO0DGow4e4z5PVylcRaviB5P8QVncw65c9p0k0gJTh8xeNGAs7N8fjVA10p66eQpJHHER8S5shZsVYDBYMhO-m0LXVVBlqINgtsnpsiZScXR55BwyZCuib9gs-Aayk6s70xlKL7"/>
+</div>
+<div class="min-w-0">
+<h3 class="font-label-lg text-label-lg font-semibold text-on-surface truncate">Dra. Vanessa Prado</h3>
+<div class="flex items-center gap-1.5 font-caption text-caption text-text-muted">
+<span class="inline-block w-2 h-2 rounded-full bg-blue-500"></span>
+<span class="truncate">Cabine 03 • Injetáveis &amp; Toxina</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Coluna 4: Fisioterapeuta Lucas Moura -->
+<div class="p-3 bg-surface-card">
+<div class="flex items-center gap-2.5">
+<div class="relative w-8 h-8 rounded-full overflow-hidden shrink-0 border border-secondary/20">
+<img class="w-full h-full object-cover" data-alt="Foto de perfil profissional de fisioterapeuta dermatofuncional masculino em jaleco contemporâneo, ambiente clínico de alta tecnologia com equipamentos de radiofrequência e criolipólise." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxiewwhVpHh6VjePKrFf78k3yJsTvJAcWxFifBxzbfmI_yv0aCX-vBcgumFmPA_whzcvXF-ska_PfVOY99RDneIpV02rO_nC_7gTLu7CiLCwlLoXld0VR-Dk3afuxhCEmbwycxstenUPBoc9GTxB3QnzsvV8V0ousstAOcEMAPGNJcqCxcAazlYG0riGZVM3mLkTvUSOW6DC4Y_f0Dl8R1HkAH8Bj-fB0ElpqGlrsO"/>
+</div>
+<div class="min-w-0">
+<h3 class="font-label-lg text-label-lg font-semibold text-on-surface truncate">Lucas Moura</h3>
+<div class="flex items-center gap-1.5 font-caption text-caption text-text-muted">
+<span class="inline-block w-2 h-2 rounded-full bg-teal-500"></span>
+<span class="truncate">Cabine 04 • Criomodelagem</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Grade Temporal em Linhas Horárias e Slots de Procedimento -->
+<div class="grid grid-cols-[80px_repeat(4,1fr)] relative">
+<!-- Linha 13:00 -->
+<div class="border-b border-r border-border-subtle h-20 p-2 text-right font-caption text-caption text-text-muted font-medium">13:00</div>
+<div class="border-b border-r border-border-subtle h-20 p-1 relative bg-surface-subtle/30">
+<div class="h-full bg-white rounded-lg border border-border-subtle p-2 text-xs flex flex-col justify-between shadow-2xs hover:border-secondary transition-all">
+<div class="flex justify-between items-start">
+<span class="font-semibold text-on-surface">Ana Clara Souza</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-800">Concluído</span>
+</div>
+<span class="text-text-muted text-[11px] truncate">Laser Virilha Completa</span>
+</div>
+</div>
+<div class="border-b border-r border-border-subtle h-20 p-1 relative">
+<div class="h-full bg-white rounded-lg border border-border-subtle p-2 text-xs flex flex-col justify-between shadow-2xs">
+<div class="flex justify-between items-start">
+<span class="font-semibold text-on-surface">Fernanda Lima</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-800">Concluído</span>
+</div>
+<span class="text-text-muted text-[11px] truncate">Limpeza de Pele Profunda</span>
+</div>
+</div>
+<div class="border-b border-r border-border-subtle h-20 p-1 relative">
+<div class="h-full bg-surface-subtle/40 border border-dashed border-border-subtle rounded-lg flex items-center justify-center text-text-muted text-[11px]">
+                Horário Vago
+              </div>
+</div>
+<div class="border-b border-border-subtle h-20 p-1 relative">
+<div class="h-full bg-white rounded-lg border border-border-subtle p-2 text-xs flex flex-col justify-between shadow-2xs">
+<div class="flex justify-between items-start">
+<span class="font-semibold text-on-surface">Roberta Dias</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-800">Concluído</span>
+</div>
+<span class="text-text-muted text-[11px] truncate">Radiofrequência Facial</span>
+</div>
+</div>
+<!-- Linha 13:30 -->
+<div class="border-b border-r border-border-subtle h-20 p-2 text-right font-caption text-caption text-text-muted font-medium">13:30</div>
+<div class="border-b border-r border-border-subtle h-20 p-1 bg-surface-subtle/30">
+<div class="h-full bg-surface-subtle/50 border border-dashed border-border-subtle rounded-lg flex items-center justify-center text-text-muted text-[11px]">
+                Higienização &amp; Resfriamento Laser
+              </div>
+</div>
+<div class="border-b border-r border-border-subtle h-20 p-1">
+<div class="h-full bg-white rounded-lg border border-border-subtle p-2 text-xs flex flex-col justify-between shadow-2xs">
+<span class="font-semibold text-on-surface">Fernanda Lima (Cont.)</span>
+<span class="text-text-muted text-[11px]">Máscara Calmante LED</span>
+</div>
+</div>
+<div class="border-b border-r border-border-subtle h-20 p-1">
+<div class="h-full bg-white rounded-lg border border-border-subtle p-2 text-xs flex flex-col justify-between shadow-2xs">
+<div class="flex justify-between items-start">
+<span class="font-semibold text-on-surface">Larissa Fontes</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-800">Concluído</span>
+</div>
+<span class="text-text-muted text-[11px] truncate">Preenchimento Labial</span>
+</div>
+</div>
+<div class="border-b border-border-subtle h-20 p-1">
+<div class="h-full bg-surface-subtle/40 border border-dashed border-border-subtle rounded-lg flex items-center justify-center text-text-muted text-[11px]">
+                Intervalo Clínico
+              </div>
+</div>
+<!-- Linha 14:00 (HORÁRIO DE PICO ATUAL) -->
+<div class="border-b border-r border-border-subtle h-32 p-2 text-right font-caption text-caption text-text-muted font-medium bg-surface-mint/20">14:00</div>
+<!-- Coluna Dra. Camila Silveira: Mariana Prado (Card Atendimento Selecionado) -->
+<div class="border-b border-r border-border-subtle h-32 p-1.5 relative bg-surface-mint/10">
+<div class="h-full bg-white rounded-xl border-2 border-primary-container p-2.5 flex flex-col justify-between shadow-sm relative overflow-hidden ring-2 ring-primary-container/20">
+<!-- Barra Semântica Esquerda -->
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-status-in-progress"></div>
+<div>
+<div class="flex items-center justify-between gap-1 mb-1 pl-1">
+<span class="font-label-md text-label-md font-bold text-on-surface truncate">Mariana Prado</span>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-800 border border-purple-200 shrink-0 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-in-progress animate-pulse"></span>
+                      Em Atendimento
+                    </span>
+</div>
+<p class="font-caption text-caption text-primary font-semibold pl-1">Depilação Laser (Axilas + Virilha)</p>
+<p class="font-caption text-caption text-text-muted pl-1">14:00 - 14:45 • Cabine 02</p>
+</div>
+<div class="flex items-center justify-between pl-1 pt-1 border-t border-border-subtle">
+<span class="inline-flex items-center gap-1 text-[11px] font-semibold text-secondary">
+<span class="material-symbols-outlined text-[14px]" data-icon="loyalty">loyalty</span>
+                    Pacote Gold (4/8)
+                  </span>
+<div class="flex items-center gap-1">
+<button class="p-1 text-text-muted hover:text-primary rounded hover:bg-surface-subtle" title="Abrir Prontuário">
+<span class="material-symbols-outlined text-sm" data-icon="clinical_notes">clinical_notes</span>
+</button>
+<span class="text-[10px] bg-primary-container text-white px-1.5 py-0.5 rounded font-medium">Selecionada</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Coluna Renata Dias: Intervalo / Higienização -->
+<div class="border-b border-r border-border-subtle h-32 p-1.5 bg-surface-mint/10">
+<div class="h-full bg-surface-subtle border border-border-subtle rounded-xl p-2.5 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-1.5 text-text-muted">
+<span class="material-symbols-outlined text-base" data-icon="cleaning_services">cleaning_services</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">Higienização de Cabine</span>
+</div>
+<p class="text-caption font-caption text-text-muted mt-1">14:00 - 14:45 • Troca de Lençóis &amp; Assepsia</p>
+</div>
+<div class="text-[11px] text-text-muted italic flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="check_circle">check_circle</span>
+                  Concluído em 14:20
+                </div>
+</div>
+</div>
+<!-- Coluna Dra. Vanessa Prado: Beatriz Lopes -->
+<div class="border-b border-r border-border-subtle h-32 p-1.5 bg-surface-mint/10">
+<div class="h-full bg-white rounded-xl border border-border-subtle hover:border-secondary p-2.5 flex flex-col justify-between shadow-2xs transition-all">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-status-info"></div>
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-bold text-on-surface">Beatriz Lopes</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-800">Agendado</span>
+</div>
+<p class="font-caption text-caption text-primary font-medium mt-0.5">Avaliação &amp; Botox (Terço Superior)</p>
+<p class="font-caption text-caption text-text-muted">14:00 - 15:00 • Cabine 03</p>
+</div>
+<div class="flex items-center justify-between text-caption font-caption text-text-muted border-t border-border-subtle pt-1">
+<span>Primeira Vez (Lead Instagram)</span>
+<span class="font-semibold text-on-surface">R$ 1.150,00</span>
+</div>
+</div>
+</div>
+<!-- Coluna Lucas Moura: Camila Rocha (Crio) -->
+<div class="border-b border-border-subtle h-32 p-1.5 bg-surface-mint/10">
+<div class="h-full bg-white rounded-xl border border-purple-200 p-2.5 flex flex-col justify-between shadow-2xs">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-status-in-progress"></div>
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-bold text-on-surface">Camila Rocha</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-purple-100 text-purple-800 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-in-progress animate-pulse"></span>
+                      Em Atendimento
+                    </span>
+</div>
+<p class="font-caption text-caption text-primary font-medium mt-0.5">Protocolo Criomodelagem 360°</p>
+<p class="font-caption text-caption text-text-muted">14:15 - 15:45 • Cabine 04</p>
+</div>
+<div class="flex items-center justify-between text-caption font-caption border-t border-border-subtle pt-1">
+<span class="text-secondary font-semibold">Sessão 2/5</span>
+<span class="text-text-muted">Tempo restante: 35 min</span>
+</div>
+</div>
+</div>
+<!-- Linha 14:45 / 15:00 -->
+<div class="border-b border-r border-border-subtle h-36 p-2 text-right font-caption text-caption text-text-muted font-medium">14:45</div>
+<!-- Coluna Dra. Camila: Alerta de Conflito de Horário Demarcado -->
+<div class="border-b border-r border-border-subtle h-36 p-1.5 relative">
+<!-- Tarja de Conflito Âmbar -->
+<div class="h-full bg-amber-50/90 border-2 border-dashed border-status-pending rounded-xl p-2.5 flex flex-col justify-between shadow-2xs">
+<div>
+<div class="flex items-center justify-between">
+<span class="inline-flex items-center gap-1 text-[11px] font-bold text-amber-900 bg-amber-200/70 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px] text-amber-800" data-icon="warning">warning</span>
+                      Conflito de Horário (15 min)
+                    </span>
+<span class="font-caption text-caption text-amber-900 font-semibold">15:00 - 15:15</span>
+</div>
+<p class="font-label-md text-label-md font-semibold text-on-surface mt-1 truncate">Sobreposição: Dra. Camila</p>
+<p class="font-caption text-caption text-text-muted">Laser Alexandrite requer 15 min de calibração entre clientes.</p>
+</div>
+<div class="flex items-center gap-1.5 pt-1">
+<button class="flex-1 py-1 px-2 rounded-lg bg-white border border-amber-300 text-amber-900 font-caption text-caption font-semibold hover:bg-amber-100 transition-colors">
+                    Ajustar (+15m)
+                  </button>
+<button class="flex-1 py-1 px-2 rounded-lg bg-primary-container text-white font-caption text-caption font-semibold hover:bg-tertiary transition-colors">
+                    Mover p/ Cabine 03
+                  </button>
+</div>
+</div>
+</div>
+<!-- Coluna Renata Dias: Juliana Mendes (Cliente Chegou) -->
+<div class="border-b border-r border-border-subtle h-36 p-1.5">
+<div class="h-full bg-white rounded-xl border border-blue-300 p-2.5 flex flex-col justify-between shadow-xs">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-bold text-on-surface">Juliana Mendes</span>
+<span class="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-900 border border-blue-200">
+                      Chegou na Recepção
+                    </span>
+</div>
+<p class="font-caption text-caption text-primary font-medium mt-0.5">Revitalização Facial + Peeling</p>
+<p class="font-caption text-caption text-text-muted">14:45 - 15:30 • Aguardando há 8 min</p>
+</div>
+<div class="flex items-center justify-between pt-1 border-t border-border-subtle">
+<span class="font-caption text-caption text-text-muted">Cabine 01 Pronta</span>
+<button class="px-2.5 py-1 rounded-lg bg-primary-container hover:bg-tertiary text-white font-caption text-caption font-semibold transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]" data-icon="play_arrow">play_arrow</span>
+                    Iniciar Atendimento
+                  </button>
+</div>
+</div>
+</div>
+<!-- Coluna Dra. Vanessa: Horário Livre para Encaixe -->
+<div class="border-b border-r border-border-subtle h-36 p-1.5">
+<div class="h-full bg-surface-mint/30 border-2 border-dashed border-secondary/40 rounded-xl p-2.5 flex flex-col items-center justify-center text-center hover:bg-surface-mint/60 cursor-pointer transition-all group">
+<span class="material-symbols-outlined text-secondary text-2xl group-hover:scale-110 transition-transform" data-icon="add_circle">add_circle</span>
+<p class="font-label-md text-label-md font-semibold text-primary mt-1">Horário Livre</p>
+<p class="font-caption text-caption text-text-muted">Disponível para Encaixe (15:00 - 16:00)</p>
+<span class="mt-2 text-[10px] font-semibold text-secondary uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-secondary/30">
+                  3 na Lista de Espera
+                </span>
+</div>
+</div>
+<!-- Coluna Lucas Moura: Continuação Crio -->
+<div class="border-b border-border-subtle h-36 p-1.5">
+<div class="h-full bg-surface-subtle/50 border border-border-subtle rounded-xl p-2.5 flex flex-col justify-between">
+<div>
+<span class="font-label-md text-label-md font-semibold text-on-surface">Camila Rocha (Cont.)</span>
+<p class="font-caption text-caption text-text-muted mt-0.5">Fase de Drenagem e Massagem Térmica</p>
+</div>
+<div class="flex items-center gap-1 text-[11px] text-text-muted">
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="timer">timer</span>
+                  Finaliza às 15:45
+                </div>
+</div>
+</div>
+<!-- Linha 15:30 / 16:00 -->
+<div class="border-b border-r border-border-subtle h-28 p-2 text-right font-caption text-caption text-text-muted font-medium">15:30</div>
+<!-- Dra Camila: Carolina Mattos (Confirmado WhatsApp) -->
+<div class="border-b border-r border-border-subtle h-28 p-1.5">
+<div class="h-full bg-white rounded-xl border border-border-subtle hover:border-secondary p-2.5 flex flex-col justify-between shadow-2xs">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-bold text-on-surface">Carolina Mattos</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-800 flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]" data-icon="check">check</span>
+                      Confirmado WPP
+                    </span>
+</div>
+<p class="font-caption text-caption text-primary font-medium mt-0.5">Laser Pernas Inteiras + Virilha</p>
+<p class="font-caption text-caption text-text-muted">15:15 - 16:15 • Cabine 02</p>
+</div>
+<div class="text-[11px] text-text-muted flex justify-between items-center border-t border-border-subtle pt-1">
+<span>Pacote Laser Prime</span>
+<span class="text-secondary font-semibold">Sessão 6/10</span>
+</div>
+</div>
+</div>
+<!-- Renata Dias: Fernanda Guimarães -->
+<div class="border-b border-r border-border-subtle h-28 p-1.5">
+<div class="h-full bg-white rounded-xl border border-border-subtle hover:border-secondary p-2.5 flex flex-col justify-between shadow-2xs">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-bold text-on-surface">Fernanda Guimarães</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-800">Agendado</span>
+</div>
+<p class="font-caption text-caption text-primary font-medium mt-0.5">Drenagem Linfática Facial</p>
+<p class="font-caption text-caption text-text-muted">15:30 - 16:30 • Cabine 01</p>
+</div>
+<div class="text-[11px] text-text-muted flex justify-between items-center border-t border-border-subtle pt-1">
+<span>Sessão Avulsa</span>
+<span class="font-semibold text-on-surface">R$ 220,00</span>
+</div>
+</div>
+</div>
+<!-- Dra. Vanessa: Patrícia Nogueira -->
+<div class="border-b border-r border-border-subtle h-28 p-1.5">
+<div class="h-full bg-white rounded-xl border border-border-subtle hover:border-secondary p-2.5 flex flex-col justify-between shadow-2xs">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-bold text-on-surface">Patrícia Nogueira</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-800">Confirmado</span>
+</div>
+<p class="font-caption text-caption text-primary font-medium mt-0.5">Bioestimulador de Colágeno (Radiesse)</p>
+<p class="font-caption text-caption text-text-muted">16:00 - 17:00 • Cabine 03</p>
+</div>
+<div class="text-[11px] text-text-muted flex justify-between items-center border-t border-border-subtle pt-1">
+<span>Procedimento VIP</span>
+<span class="font-semibold text-on-surface">R$ 2.400,00</span>
+</div>
+</div>
+</div>
+<!-- Lucas Moura: Encaixe Disponível -->
+<div class="border-b border-border-subtle h-28 p-1.5">
+<div class="h-full bg-surface-subtle/30 border border-dashed border-border-subtle rounded-xl p-2.5 flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-text-muted text-xl" data-icon="event_available">event_available</span>
+<span class="text-caption font-caption text-text-muted mt-1">Disponível a partir das 16:00</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================== -->
+<!-- 5. PAINEL LATERAL DIREITO FIXO / FLYOUT DOCK -->
+<!-- FICHA E FLUXO DO ATENDIMENTO ATIVO: MARIANA PRADO -->
+<!-- ========================================== -->
+<aside class="w-96 shrink-0 bg-surface-card flex flex-col justify-between overflow-y-auto custom-scrollbar border-l border-border-subtle shadow-md select-none">
+<!-- Conteúdo Superior do Flyout -->
+<div class="p-5 space-y-5">
+<!-- Cabeçalho do Card da Cliente -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="relative w-14 h-14 rounded-2xl overflow-hidden shrink-0 border-2 border-surface-mint shadow-xs">
+<img class="w-full h-full object-cover" data-alt="Retrato de cliente jovem feminina sorridente e sofisticada, iluminação de estúdio natural e suave, pele bem cuidada e radiante em ambiente de spa de luxo contemporâneo." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAURZzHG7GL9BHxFbh8wTYO5n1vxhmKRbPBqWFQ6D5rB4Efkiodt4atlEQ0qDGzcPSrCaVKFNHaN_NBWO0vkXmsdOcKPeFim7b2C5Zb6REYRMQEAbwfsSsokP4p5lYBWTDpKJNDrqxN6oAv5K0Z6AlmGoB6XP6NDNdPAKasW-zTa7RTg1YVlmZHuenl3E-xjN-ZUfL3OdZaUa4XxsocX_67NM1QCc7avssSSd3SggxO"/>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Mariana Prado</h3>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-200">
+                  VIP OURO
+                </span>
+</div>
+<p class="font-body-sm text-body-sm text-text-muted flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-sm text-emerald-600" data-icon="phone_iphone">phone_iphone</span>
+                (11) 98452-3310
+              </p>
+</div>
+</div>
+<button class="p-1.5 text-text-muted hover:text-on-surface rounded-lg hover:bg-surface-subtle transition-colors" title="Recolher Painel">
+<span class="material-symbols-outlined text-lg" data-icon="close">close</span>
+</button>
+</div>
+<!-- Alertas Clínicos & Fototipo -->
+<div class="bg-surface-subtle p-3 rounded-xl border border-border-subtle space-y-2">
+<div class="flex items-center justify-between text-caption font-caption text-text-muted uppercase tracking-wider font-semibold">
+<span>Alertas Clínicos &amp; Perfil</span>
+<span class="text-primary font-bold">LTV: R$ 3.840</span>
+</div>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-0.5 rounded-md text-xs font-semibold bg-white text-secondary border border-border-subtle flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="light_mode">light_mode</span>
+              Fototipo III (Fitzpatrick)
+            </span>
+<span class="px-2 py-0.5 rounded-md text-xs font-semibold bg-white text-emerald-800 border border-border-subtle flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="verified">verified</span>
+              Sem Alergias Cutâneas
+            </span>
+<span class="px-2 py-0.5 rounded-md text-xs font-semibold bg-rose-50 text-rose-800 border border-rose-200 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="info">info</span>
+              Pele Sensível em Axilas
+            </span>
+</div>
+</div>
+<!-- Dados do Atendimento em Andamento -->
+<div class="p-3.5 rounded-xl border border-primary-container/20 bg-surface-mint/30 space-y-2.5">
+<div class="flex items-center justify-between">
+<span class="text-caption font-caption uppercase tracking-wider text-primary font-bold">Atendimento Atual</span>
+<span class="px-2 py-0.5 rounded-full text-xs font-bold bg-purple-100 text-purple-800 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-in-progress animate-pulse"></span>
+              Em Execução
+            </span>
+</div>
+<div class="space-y-1">
+<h4 class="font-label-lg text-label-lg font-bold text-on-surface">Depilação a Laser (Axilas + Virilha Completa)</h4>
+<div class="grid grid-cols-2 gap-2 text-body-sm font-body-sm text-text-muted pt-1">
+<div>
+<span class="block text-caption font-caption text-text-muted">Profissional:</span>
+<span class="font-medium text-on-surface">Dra. Camila Silveira</span>
+</div>
+<div>
+<span class="block text-caption font-caption text-text-muted">Cabine &amp; Hora:</span>
+<span class="font-medium text-on-surface">Cabine 02 (14:00 - 14:45)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Saldo do Pacote em Destaque Visual -->
+<div class="bg-surface-card p-3.5 rounded-xl border border-border-subtle shadow-2xs space-y-2.5">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-bold text-on-surface flex items-center gap-1.5">
+<span class="material-symbols-outlined text-base text-secondary" data-icon="loyalty">loyalty</span>
+              Pacote Laser Gold (Virilha + Axilas)
+            </span>
+<span class="font-caption text-caption font-bold text-primary bg-surface-mint px-2 py-0.5 rounded-full">
+              Restam 4 sessões
+            </span>
+</div>
+<!-- Barra de Progresso com Contadores Claros -->
+<div>
+<div class="flex justify-between text-caption font-caption text-text-muted mb-1 font-medium">
+<span>Sessão 4 de 8 Realizada</span>
+<span class="text-primary font-bold">50% Concluído</span>
+</div>
+<div class="w-full h-2.5 bg-surface-subtle rounded-full overflow-hidden p-0.5 border border-border-subtle">
+<div class="h-full bg-primary-container rounded-full transition-all duration-500" style="width: 50%;"></div>
+</div>
+</div>
+<div class="flex items-center justify-between text-caption font-caption text-text-muted pt-1">
+<span>Última Sessão: 22/09/2024</span>
+<span class="text-emerald-700 font-semibold">Sem pendências financeiras</span>
+</div>
+</div>
+<!-- Última Observação Clínica Gravada -->
+<div class="bg-surface-subtle p-3 rounded-xl border border-border-subtle space-y-1.5">
+<div class="flex items-center gap-1.5 text-primary text-label-md font-label-md font-semibold">
+<span class="material-symbols-outlined text-base" data-icon="notes">notes</span>
+<span>Última Observação Técnica</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface bg-white p-2.5 rounded-lg border border-border-subtle italic">
+            "Parâmetro de energia reduzido em 1.5J na última sessão devido a leve sensibilidade local relatada na axila direita. Resposta folicular excelente."
+          </p>
+<span class="text-[10px] text-text-muted block text-right">Por Dra. Camila Silveira em 22/09</span>
+</div>
+<!-- Link Rápido de Prontuário -->
+<a class="flex items-center justify-between p-2.5 rounded-xl border border-border-subtle hover:bg-surface-subtle transition-colors group" href="#">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary group-hover:scale-110 transition-transform" data-icon="photo_library">photo_library</span>
+<span class="font-label-md text-label-md font-medium text-on-surface">Prontuário &amp; Fotos Antes/Depois</span>
+</div>
+<span class="material-symbols-outlined text-text-muted text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<!-- Rodapé do Flyout: 3 Ações Principais do Fluxo Diário -->
+<div class="p-4 border-t border-border-subtle bg-surface-card space-y-2 shrink-0">
+<!-- 1. Botão Primário em Verde-Petróleo: Concluir Atendimento & Ir para Caixa -->
+<button class="w-full py-3 px-4 rounded-xl bg-primary-container hover:bg-tertiary transition-all duration-150 active:scale-[0.99] text-on-primary font-label-lg text-label-lg font-semibold flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-xl" data-icon="check_circle">check_circle</span>
+<span>Concluir Atendimento &amp; Ir para Caixa (R$)</span>
+</button>
+<!-- 2. Botão Secundário: Reagendar / Marcar Retorno -->
+<button class="w-full py-2.5 px-4 rounded-xl bg-surface-mint hover:bg-secondary-container/30 text-primary-container font-label-md text-label-md font-semibold flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="event_repeat">event_repeat</span>
+<span>Reagendar / Marcar Próxima Sessão</span>
+</button>
+<!-- 3. Botão com ícone WhatsApp: Enviar Confirmação / Mensagem -->
+<button class="w-full py-2 px-4 rounded-xl border border-border-subtle hover:bg-surface-subtle text-on-surface font-label-md text-label-md flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-lg text-emerald-600" data-icon="chat">chat</span>
+<span>Enviar Lembrete via WhatsApp</span>
+</button>
+</div>
+</aside>
+</main>
+</body></html>
